@@ -4241,3 +4241,1676 @@ const UNITS = [
 const CAT_COLOR = {};
 CATEGORIES.forEach(c => { CAT_COLOR[c.id] = c.color; });
 </script>
+<script>
+// ============================================================
+// EXERCISE DATA — Questions for every unit
+// ============================================================
+
+const EXERCISES = {
+  1: [
+    { type:'mc', q:"Right now, Sarah _____ in the car.", opts:["drive","drives","is driving","drove"], ans:2, exp:"Present continuous (am/is/are + -ing) for actions happening NOW." },
+    { type:'mc', q:"Kate wants to work in Italy, so she _____ Italian.", opts:["learns","learned","is learning","has learned"], ans:2, exp:"Present continuous for an ongoing activity around the present time." },
+    { type:'fill', q:"Please don't make so much noise. I ____________ (try) to work.", ans:"am trying", exp:"Present continuous: am/is/are + -ing." },
+    { type:'fill', q:"It ____________ (not rain) any more. Let's go out!", ans:"isn't raining", exp:"Negative present continuous: isn't + -ing." },
+    { type:'mc', q:"'Where's Mark?' '_____ a shower.'", opts:["He has","He's having","He has had","He have"], ans:1, exp:"He's having = He is having. Present continuous for now." },
+    { type:'error', q:"The population of the world increases very fast right now.", ans:"is increasing", exp:"For ongoing changes, use present continuous: is increasing." }
+  ],
+  2: [
+    { type:'mc', q:"Water _____ at 100 degrees Celsius.", opts:["is boiling","boils","boil","has boiled"], ans:1, exp:"General truth → present simple." },
+    { type:'fill', q:"'What do you do?' 'I ____________ (work) in a shop.'", ans:"work", exp:"Present simple for permanent facts/jobs." },
+    { type:'mc', q:"Rice _____ in cold climates.", opts:["doesn't grow","isn't growing","don't grow","not grows"], ans:0, exp:"Present simple negative: doesn't + base verb." },
+    { type:'fill', q:"I ____________ (promise) I won't be late.", ans:"promise", exp:"Performative verbs use present simple." },
+    { type:'mc', q:"'What _____ this word mean?'", opts:["does","is","do","means"], ans:0, exp:"Use 'does' for questions with he/she/it." },
+    { type:'error', q:"She works not in this office.", ans:"She doesn't work in this office.", exp:"Present simple negative: doesn't + base verb." }
+  ],
+  3: [
+    { type:'mc', q:"My parents _____ in London. They've lived there all their lives.", opts:["are living","live","lived","have lived"], ans:1, exp:"Permanent situation → present simple." },
+    { type:'mc', q:"I _____ with some friends until I find a flat.", opts:["live","am living","lived","have lived"], ans:1, exp:"Temporary situation → present continuous." },
+    { type:'fill', q:"You're ____________ (always/play) computer games! (implies annoyance)", ans:"always playing", exp:"Always + present continuous = happening too often (critical tone)." },
+    { type:'error', q:"I'm knowing the answer.", ans:"I know the answer.", exp:"'Know' is a state verb — not used in continuous." },
+    { type:'mc', q:"The water _____. Can you turn it off?", opts:["boils","is boiling","boiled","has boiled"], ans:1, exp:"Action happening right now → continuous." }
+  ],
+  4: [
+    { type:'mc', q:"Do you _____ what I mean?", opts:["understanding","are understanding","understand","understood"], ans:2, exp:"'Understand' is a state verb — no continuous form." },
+    { type:'mc', q:"'Are you hungry?' 'Yes, I _____ about food.'", opts:["think","am thinking","thought","have thought"], ans:1, exp:"Thinking as an active process → continuous." },
+    { type:'fill', q:"She ____________ (have) a shower right now.", ans:"is having", exp:"'Have a shower' is an action, not a state → continuous." },
+    { type:'error', q:"I'm wanting a coffee right now.", ans:"I want a coffee right now.", exp:"'Want' is a state verb — use simple form." },
+    { type:'mc', q:"This soup _____ great!", opts:["is tasting","tastes","tasting","taste"], ans:1, exp:"State verb (perception) → simple." }
+  ],
+  5: [
+    { type:'mc', q:"Mozart _____ in 1756.", opts:["is born","was born","has been born","born"], ans:1, exp:"Specific past event → past simple." },
+    { type:'fill', q:"I ____________ (not sleep) well last night.", ans:"didn't sleep", exp:"Past simple negative: didn't + base verb." },
+    { type:'mc', q:"'_____ you enjoy the film?' 'Yes, I did.'", opts:["Have","Did","Do","Were"], ans:1, exp:"Past simple question: Did + subject + base verb?" },
+    { type:'error', q:"Yesterday I have seen him.", ans:"Yesterday I saw him.", exp:"'Yesterday' = specific past time → past simple, not present perfect." },
+    { type:'fill', q:"We ____________ (get up) early, had breakfast and left.", ans:"got up", exp:"Series of completed past actions → past simple." }
+  ],
+  6: [
+    { type:'mc', q:"At eight o'clock last night, I _____ TV.", opts:["watched","was watching","have watched","watch"], ans:1, exp:"Action in progress at a specific past time → past continuous." },
+    { type:'fill', q:"I ____________ (walk) home when it started to rain.", ans:"was walking", exp:"Background action (continuous) interrupted by a shorter event (simple)." },
+    { type:'mc', q:"Tom hurt his back while _____ in the garden.", opts:["he worked","he works","he was working","he had worked"], ans:2, exp:"Simultaneous ongoing activity → past continuous with 'while'." },
+    { type:'error', q:"They was playing football when I arrived.", ans:"They were playing football when I arrived.", exp:"Past continuous: was (I/he/she/it) / were (you/we/they)." },
+    { type:'fill', q:"What ____________ (you/do) at 11 last night?", ans:"were you doing", exp:"Past continuous question: were + subject + -ing?" }
+  ],
+  7: [
+    { type:'mc', q:"I _____ my key. I can't get in.", opts:["lose","lost","have lost","had lost"], ans:2, exp:"Present result (I can't get in) → present perfect." },
+    { type:'fill', q:"'Have you ever ____________ (be) to Australia?' 'No, never.'", ans:"been", exp:"Present perfect with 'ever' for life experience." },
+    { type:'mc', q:"She _____ just _____.", opts:["has/left","have/left","left/just","did/leave"], ans:0, exp:"Just + present perfect for a very recent action." },
+    { type:'error', q:"I have seen him yesterday.", ans:"I saw him yesterday.", exp:"'Yesterday' is a specific past time — use past simple." },
+    { type:'fill', q:"Look — it ____________ (stop) raining!", ans:"has stopped", exp:"Present result visible now → present perfect." }
+  ],
+  8: [
+    { type:'mc', q:"This is the best meal I _____ ever _____.", opts:["have/eaten","had/eaten","did/eat","have/ate"], ans:0, exp:"Superlative + present perfect + ever." },
+    { type:'fill', q:"It's the first time she ____________ (drive) a car.", ans:"has driven", exp:"'First time' + present perfect." },
+    { type:'mc', q:"_____ scientists _____ a new planet?", opts:["Did/discover","Have/discovered","Has/discovered","Are/discovering"], ans:1, exp:"Recent news/discovery → present perfect." },
+    { type:'error', q:"It was the best film I ever saw.", ans:"It's the best film I've ever seen.", exp:"Superlative with 'ever' → present perfect." }
+  ],
+  9: [
+    { type:'mc', q:"I _____ English for six months.", opts:["learn","learned","have been learning","am learning"], ans:2, exp:"Activity still continuing → present perfect continuous." },
+    { type:'fill', q:"You look tired. ____________ (you/run)?", ans:"Have you been running", exp:"Present perfect continuous explains the present visible state." },
+    { type:'mc', q:"It _____ since lunchtime.", opts:["is raining","rains","has been raining","rained"], ans:2, exp:"Activity started in past and still continuing → present perfect continuous." },
+    { type:'error', q:"I've been knowing her for years.", ans:"I've known her for years.", exp:"'Know' is a state verb — use present perfect simple, not continuous." },
+    { type:'fill', q:"My hands are dirty. I ____________ (fix) the car.", ans:"have been fixing", exp:"Recent activity explains present state → present perfect continuous." }
+  ],
+  10: [
+    { type:'mc', q:"I _____ 200 pages so far. (focus on quantity)", opts:["have been reading","read","have read","was reading"], ans:2, exp:"Number/quantity → present perfect simple." },
+    { type:'mc', q:"She _____ letters all morning. (focus on activity)", opts:["wrote","has written","has been writing","writes"], ans:2, exp:"Activity/process → present perfect continuous." },
+    { type:'fill', q:"How long ____________ (you/live) here?", ans:"have you been living", exp:"Duration of ongoing activity → present perfect continuous." },
+    { type:'error', q:"I've been writing three letters.", ans:"I've written three letters.", exp:"Number (three) → present perfect simple, not continuous." }
+  ],
+  11: [
+    { type:'mc', q:"'How long _____ married?' 'For 20 years.'", opts:["are they","were they","have they been","did they be"], ans:2, exp:"How long + ongoing state → present perfect." },
+    { type:'fill', q:"Paul ____________ (be) in hospital since Monday.", ans:"has been", exp:"Ongoing state since a point → present perfect." },
+    { type:'error', q:"How long are you living here?", ans:"How long have you been living here?", exp:"How long + ongoing activity → present perfect continuous." },
+    { type:'mc', q:"I _____ this book for a week.", opts:["read","am reading","have been reading","was reading"], ans:2, exp:"Duration of ongoing activity → present perfect continuous." }
+  ],
+  12: [
+    { type:'mc', q:"I've been waiting _____ an hour.", opts:["since","for","during","from"], ans:1, exp:"'For' + period of time." },
+    { type:'mc', q:"She has lived here _____ 2015.", opts:["for","during","since","from"], ans:2, exp:"'Since' + point in time." },
+    { type:'fill', q:"They've been married ____________ 25 years.", ans:"for", exp:"Period of time → 'for'." },
+    { type:'error', q:"I'm here since Monday.", ans:"I've been here since Monday.", exp:"Ongoing state since Monday → present perfect." },
+    { type:'mc', q:"She hasn't phoned _____ ages.", opts:["since","for","during","in"], ans:1, exp:"'For ages' = a long period of time." }
+  ],
+  13: [
+    { type:'mc', q:"'_____ you ever _____ to Japan?' 'No, never.'", opts:["Did/go","Have/been","Have/gone","Did/been"], ans:1, exp:"Life experience up to now → present perfect with 'ever'." },
+    { type:'fill', q:"I ____________ (break) my leg in 2018.", ans:"broke", exp:"Specific past time (2018) → past simple." },
+    { type:'error', q:"Did you ever eat frog's legs?", ans:"Have you ever eaten frog's legs?", exp:"Life experience question → present perfect." },
+    { type:'mc', q:"Did Shakespeare _____ Hamlet?", opts:["write","wrote","has written","written"], ans:0, exp:"Question about a completed historical action → past simple." }
+  ],
+  14: [
+    { type:'mc', q:"'There's been an accident. A car _____ a cyclist.'", opts:["hits","has hit","hit","is hitting"], ans:2, exp:"Detail after 'there's been' → past simple." },
+    { type:'fill', q:"I ____________ (pass) my exam! I got 89%.", ans:"have passed", exp:"News → present perfect; detail (got 89%) → past simple." },
+    { type:'mc', q:"She _____ her job. She resigned on Friday.", opts:["has left","left","leaves","had left"], ans:0, exp:"Announcement/news → present perfect." }
+  ],
+  15: [
+    { type:'mc', q:"When I arrived, the film _____ already _____.", opts:["has/started","had/started","was/starting","started/already"], ans:1, exp:"Earlier past action → past perfect." },
+    { type:'fill', q:"She was tired because she ____________ (not sleep) well.", ans:"hadn't slept", exp:"Past perfect for reason before a past state." },
+    { type:'error', q:"When I came home, she left already.", ans:"When I came home, she had already left.", exp:"Action before another past action → past perfect." },
+    { type:'mc', q:"By the time we got there, they _____ all the tickets.", opts:["sold","have sold","had sold","were selling"], ans:2, exp:"'By the time' + past simple → past perfect for the earlier action." }
+  ],
+  16: [
+    { type:'mc', q:"She _____ for an hour when he finally arrived.", opts:["waited","has waited","had been waiting","was waiting"], ans:2, exp:"Duration before a past event → past perfect continuous." },
+    { type:'fill', q:"He was out of breath — he ____________ (run).", ans:"had been running", exp:"Past perfect continuous explains a past state." },
+    { type:'error', q:"They were tired because they travelled all day.", ans:"They were tired because they had been travelling all day.", exp:"Duration before a past result → past perfect continuous." }
+  ],
+  17: [
+    { type:'mc', q:"'_____ you _____ a car?' 'Yes, I've got one.'", opts:["Do/have","Have/got","Did/get","Are/having"], ans:1, exp:"'Have you got' = do you possess? (British English)." },
+    { type:'fill', q:"I ____________ a dog when I was young.", ans:"had", exp:"Past possession → 'had' (not 'had got')." },
+    { type:'error', q:"She has got a shower every morning.", ans:"She has a shower every morning.", exp:"'Have a shower' = action. Cannot use 'have got' for actions." }
+  ],
+  18: [
+    { type:'mc', q:"I _____ smoke, but I stopped two years ago.", opts:["use to","am used to","used to","was used to"], ans:2, exp:"Past habit that stopped → 'used to'." },
+    { type:'fill', q:"There ____________ (use/be) a cinema here — now it's a car park.", ans:"used to be", exp:"Past state no longer true → 'used to be'." },
+    { type:'error', q:"I use to go there every day.", ans:"I used to go there every day.", exp:"Past habit: 'used to' (not 'use to' in positive statements)." },
+    { type:'mc', q:"I _____ getting up early. It's normal for me now.", opts:["used to","am used to","use to","would"], ans:1, exp:"Accustomed to = 'be used to + -ing'." }
+  ],
+  19: [
+    { type:'mc', q:"I _____ Sarah tomorrow evening. We arranged it last week.", opts:["meet","will meet","am meeting","would meet"], ans:2, exp:"Fixed future arrangement → present continuous." },
+    { type:'fill', q:"The train ____________ (leave) at 9:30.", ans:"leaves", exp:"Timetabled event → present simple." },
+    { type:'error', q:"The bus is leaving at 6 every morning.", ans:"The bus leaves at 6 every morning.", exp:"Timetable → present simple." },
+    { type:'mc', q:"What _____ this weekend?", opts:["do you do","will you do","are you doing","have you done"], ans:2, exp:"Future arrangement/plans → present continuous." }
+  ],
+  20: [
+    { type:'mc', q:"Look at those clouds — it _____ rain!", opts:["will","is going to","is","would"], ans:1, exp:"Prediction based on present evidence → going to." },
+    { type:'fill', q:"She ____________ (have) a baby. (She's pregnant.)", ans:"is going to have", exp:"Future based on present fact → going to." },
+    { type:'mc', q:"I've decided. I _____ buy a new car.", opts:["will","am going to","would","shall"], ans:1, exp:"Pre-decided intention → going to." },
+    { type:'error', q:"A: We need milk. B: I am going to get some. (spontaneous decision)", ans:"I'll get some.", exp:"Spontaneous decision made at the moment → 'will', not 'going to'." }
+  ],
+  21: [
+    { type:'mc', q:"A: We have no milk. B: OK, I _____ get some.", opts:["am going to","will","would","shall"], ans:1, exp:"Spontaneous decision → will." },
+    { type:'fill', q:"I ____________ (call) you when I arrive. (promise)", ans:"will call", exp:"Promise → will." },
+    { type:'mc', q:"_____ I open the window? (offer)", opts:["Will","Should","Shall","Would"], ans:2, exp:"'Shall I' = offer (British English)." },
+    { type:'error', q:"I think it wills rain tomorrow.", ans:"I think it will rain tomorrow.", exp:"'Will' never takes -s: will (not wills)." }
+  ],
+  22: [
+    { type:'mc', q:"I _____ she'll get the job. She's very good.", opts:["think","am thinking","thought","will think"], ans:0, exp:"'I think + will' for future predictions/opinions." },
+    { type:'fill', q:"_____ we go out tonight?", ans:"Shall", exp:"'Shall we' = suggestion (British English)." },
+    { type:'mc', q:"She _____ listen to anyone. She's very stubborn.", opts:["won't","doesn't","isn't","can't"], ans:0, exp:"Won't = refusal (unwillingness)." }
+  ],
+  23: [
+    { type:'mc', q:"A: Are you going out? B: Yes, I _____ buy some shoes. (planned before)", opts:["will","am going to","would","shall"], ans:1, exp:"Pre-planned intention → going to." },
+    { type:'mc', q:"A: The phone is ringing. B: I _____ get it. (spontaneous)", opts:["am going to","would","will","shall"], ans:2, exp:"Spontaneous offer/decision → will." },
+    { type:'error', q:"I'm going to answer the phone now. (spontaneous)", ans:"I'll answer the phone.", exp:"Spontaneous decision → 'will', not 'going to'." }
+  ],
+  24: [
+    { type:'mc', q:"At 3pm tomorrow, I _____ on a beach.", opts:["will sit","will be sitting","am sitting","will have sat"], ans:1, exp:"Action in progress at a future time → will be + -ing." },
+    { type:'fill', q:"By 10 o'clock, we ____________ (finish) dinner.", ans:"will have finished", exp:"Completed before a future point → will have + past participle." },
+    { type:'mc', q:"_____ you be using the car tonight? (polite question)", opts:["Are","Will","Shall","Would"], ans:1, exp:"'Will you be doing' = polite future enquiry." }
+  ],
+  25: [
+    { type:'mc', q:"When you _____, give me a call.", opts:["will arrive","arrive","arrived","are arriving"], ans:1, exp:"After 'when' in future clauses → present simple (not will)." },
+    { type:'fill', q:"We'll go out when it ____________ (stop) raining.", ans:"stops", exp:"Future time clause with 'when' → present simple." },
+    { type:'error', q:"When I will see him, I'll tell him.", ans:"When I see him, I'll tell him.", exp:"No 'will' after 'when' in future time clauses." },
+    { type:'mc', q:"_____ it rains, we'll cancel the picnic.", opts:["When","While","If","Unless"], ans:2, exp:"'If' for possible/uncertain events; 'when' for certain ones." }
+  ],
+  26: [
+    { type:'mc', q:"In the future, we _____ travel to Mars.", opts:["can","could","will be able to","are able to"], ans:2, exp:"Future ability → will be able to (not 'can')." },
+    { type:'fill', q:"After months of practice, she ____________ (manage) to run 10km.", ans:"was able to", exp:"Specific past achievement → 'was able to' or 'managed to' (not 'could')." },
+    { type:'error', q:"I could pass the exam last year. (specific success)", ans:"I was able to pass / I managed to pass the exam last year.", exp:"Specific one-time achievement in the past → 'was able to', not 'could'." },
+    { type:'mc', q:"The word 'dream' _____ be a noun or a verb.", opts:["must","should","can","will"], ans:2, exp:"General possibility → can." }
+  ],
+  27: [
+    { type:'mc', q:"You _____ been more careful. (past criticism)", opts:["could have","should have","can have","would"], ans:0, exp:"Could have done = had the ability but didn't use it." },
+    { type:'fill', q:"That was dangerous! You ____________ (kill).", ans:"could have been killed", exp:"Past possibility of negative outcome → could have been + past participle." },
+    { type:'mc', q:"I _____ done it without your help.", opts:["couldn't have","can't have","mustn't have","wouldn't"], ans:0, exp:"It was impossible → couldn't have done." }
+  ],
+  28: [
+    { type:'mc', q:"You've been travelling all day. You _____ tired.", opts:["can be","must be","should be","would be"], ans:1, exp:"Logical deduction (I'm sure it's true) → must." },
+    { type:'fill', q:"That ____________ (be) Tom — he's in Paris.", ans:"can't be", exp:"Logical deduction (I'm sure it's NOT true) → can't be." },
+    { type:'error', q:"He must forgot. He never answers his phone.", ans:"He must have forgotten.", exp:"Deduction about the past: must have + past participle." },
+    { type:'mc', q:"She passed every exam. She _____ study very hard.", opts:["can","must","should","would"], ans:1, exp:"Logical deduction → must." }
+  ],
+  29: [
+    { type:'mc', q:"I _____ go to Paris next week. I'm not sure yet.", opts:["will","must","may","should"], ans:2, exp:"Possibility (not certain) → may/might." },
+    { type:'fill', q:"It ____________ (rain) this afternoon. Take an umbrella.", ans:"might rain", exp:"Possible future event → might + base verb." },
+    { type:'error', q:"He may to be late.", ans:"He may be late.", exp:"Modal verbs are followed by base verb (no 'to')." },
+    { type:'mc', q:"She _____ have missed the train.", opts:["might","must to","may to","should"], ans:0, exp:"Possibility about the past → might have + past participle." }
+  ],
+  30: [
+    { type:'mc', q:"We've finished early. We _____ go home.", opts:["might as well","should","had better","will"], ans:0, exp:"No better option available → might as well." },
+    { type:'fill', q:"There's nothing on TV. I ____________ go to bed.", ans:"might as well", exp:"'Might as well' = no better option." }
+  ],
+  31: [
+    { type:'mc', q:"You _____ wear a tie. It's not necessary.", opts:["mustn't","don't have to","shouldn't","can't"], ans:1, exp:"'Don't have to' = not necessary (you have a choice)." },
+    { type:'fill', q:"You ____________ tell anyone. It's a secret.", ans:"mustn't", exp:"'Mustn't' = forbidden/not allowed." },
+    { type:'error', q:"I didn't have to went to work yesterday.", ans:"I didn't have to go to work yesterday.", exp:"After 'have to' → base verb (not past form)." },
+    { type:'mc', q:"She _____ wait an hour for the bus. (past obligation)", opts:["must","has to","had to","should"], ans:2, exp:"Past obligation → had to (not must)." }
+  ],
+  32: [
+    { type:'mc', q:"You _____ shout — I can hear you perfectly.", opts:["mustn't","needn't","shouldn't","don't have"], ans:1, exp:"'Needn't' = it's not necessary." },
+    { type:'fill', q:"You ____________ have cooked — we were going out anyway.", ans:"needn't have", exp:"'Needn't have done' = did it but it was unnecessary." },
+    { type:'mc', q:"You _____ park here. It's a no-parking zone.", opts:["don't have to","needn't","mustn't","shouldn't"], ans:2, exp:"'Mustn't' = prohibited/forbidden." }
+  ],
+  33: [
+    { type:'mc', q:"You _____ see a doctor about that cough.", opts:["must","should","shall","have to"], ans:1, exp:"Advice/recommendation → should." },
+    { type:'fill', q:"I ____________ (study) more. I regret it now.", ans:"should have studied", exp:"Past regret/criticism: should have + past participle." },
+    { type:'error', q:"I should to call him.", ans:"I should call him.", exp:"Modal verbs + base verb (no 'to' after 'should')." },
+    { type:'mc', q:"She _____ have left without saying goodbye.", opts:["shouldn't","mustn't","can't","wouldn't"], ans:0, exp:"Past criticism → shouldn't have done." }
+  ],
+  34: [
+    { type:'mc', q:"It's strange that she _____ say that.", opts:["would","should","could","must"], ans:1, exp:"'Should' expresses surprise or unexpectedness." },
+    { type:'fill', q:"I suggest that you ____________ (see) a lawyer.", ans:"should see", exp:"After 'suggest that' → should + base verb." }
+  ],
+  35: [
+    { type:'mc', q:"You _____ take an umbrella — it looks like rain.", opts:["should","had better","must","have to"], ans:1, exp:"'Had better' = strong advice for specific situation." },
+    { type:'fill', q:"It's 2am. It's time ____________ (go) to bed.", ans:"to go", exp:"'It's time to + infinitive' = overdue action." },
+    { type:'error', q:"You had better to take an umbrella.", ans:"You had better take an umbrella.", exp:"'Had better' + base verb (no 'to')." },
+    { type:'mc', q:"It's time you _____ a job.", opts:["get","got","will get","to get"], ans:1, exp:"'It's time + subject + past tense' = something is overdue." }
+  ],
+  36: [
+    { type:'mc', q:"She _____ open the door. She refused.", opts:["wouldn't","won't","can't","mustn't"], ans:0, exp:"'Wouldn't' = past refusal/unwillingness." },
+    { type:'fill', q:"I ____________ (rather) stay home than go out.", ans:"would rather", exp:"'Would rather + base verb' = preference." },
+    { type:'error', q:"I would rather to stay.", ans:"I would rather stay.", exp:"'Would rather' + base verb (no 'to')." }
+  ],
+  37: [
+    { type:'mc', q:"_____ you help me carry this? (polite request)", opts:["Will","Can","Could","Shall"], ans:2, exp:"'Could you' is more polite than 'can you'." },
+    { type:'mc', q:"_____ I use your phone?", opts:["Would","Shall","May","Could I"], ans:2, exp:"'May I' = polite permission." },
+    { type:'fill', q:"_____ I carry that for you? (offer)", ans:"Shall", exp:"'Shall I' = offer to help." }
+  ],
+  38: [
+    { type:'mc', q:"If it _____, we'll cancel the match.", opts:["will rain","rains","rained","would rain"], ans:1, exp:"Type 1 conditional: if + present simple → will." },
+    { type:'fill', q:"If I ____________ (have) more money, I'd travel.", ans:"had", exp:"Type 2 conditional: if + past simple → would." },
+    { type:'error', q:"If I would have time, I would help.", ans:"If I had time, I would help.", exp:"No 'would' in the if-clause. Use past simple." },
+    { type:'mc', q:"What _____ you do if you lost your job?", opts:["will","would","should","could"], ans:1, exp:"Type 2 unreal conditional → would." }
+  ],
+  39: [
+    { type:'mc', q:"I wish I _____ the answer. (I don't know it)", opts:["know","knew","have known","will know"], ans:1, exp:"Wish + past simple for present unreal wishes." },
+    { type:'fill', q:"I wish I ____________ (speak) better French.", ans:"could speak", exp:"Wish + could + base verb for ability wishes." },
+    { type:'error', q:"I wish I can speak Spanish.", ans:"I wish I could speak Spanish.", exp:"Wish + could (not can) for present ability wishes." },
+    { type:'mc', q:"If I knew her number, I _____ call her.", opts:["will","would","should","might"], ans:1, exp:"Type 2 unreal conditional → would." }
+  ],
+  40: [
+    { type:'mc', q:"If I had known you were ill, I _____ visited you.", opts:["will have","would have","had","could"], ans:1, exp:"Type 3 conditional: would have + past participle." },
+    { type:'fill', q:"I wish I ____________ (study) harder. (past regret)", ans:"had studied", exp:"Wish + past perfect for past regrets." },
+    { type:'error', q:"I wish I would have gone to the party.", ans:"I wish I had gone to the party.", exp:"Past regret: wish + past perfect (not 'would have')." }
+  ],
+  41: [
+    { type:'mc', q:"I wish you _____ stop making that noise! (frustration)", opts:["would","will","could","should"], ans:0, exp:"Wish + would for wanting a change in behaviour." },
+    { type:'fill', q:"I wish I ____________ (live) nearer the sea. (now wish)", ans:"lived", exp:"Present unreal wish → wish + past simple." },
+    { type:'mc', q:"I wish I _____ taken that job. (past regret)", opts:["have","had","would have","could"], ans:1, exp:"Past regret → wish + past perfect." }
+  ],
+  42: [
+    { type:'mc', q:"My car _____ last night.", opts:["stole","was stolen","has stolen","is stolen"], ans:1, exp:"Past passive: was/were + past participle." },
+    { type:'fill', q:"These cars ____________ (make) in Japan.", ans:"are made", exp:"Present passive: am/is/are + past participle." },
+    { type:'error', q:"The letter was sended last week.", ans:"The letter was sent last week.", exp:"'Send' is irregular: sent (not sended)." },
+    { type:'mc', q:"English _____ all over the world.", opts:["speaks","is spoken","is speaking","spoke"], ans:1, exp:"General passive fact → is + past participle." }
+  ],
+  43: [
+    { type:'mc', q:"The bridge _____ right now. (ongoing passive)", opts:["is repaired","is being repaired","has repaired","was repaired"], ans:1, exp:"Continuous passive: is/are being + past participle." },
+    { type:'fill', q:"The house ____________ (paint). (recently completed)", ans:"has been painted", exp:"Perfect passive: has/have been + past participle." },
+    { type:'mc', q:"The application _____ by Friday.", opts:["must submit","must be submitted","must have submitted","is submitting"], ans:1, exp:"Modal passive: must be + past participle." }
+  ],
+  44: [
+    { type:'mc', q:"How did he _____?", opts:["get hurt","was hurt","got hurted","be hurt"], ans:0, exp:"Get passive (informal): get + past participle." },
+    { type:'fill', q:"She ____________ (promote) last month.", ans:"got promoted", exp:"Get passive for informal/unexpected events." }
+  ],
+  45: [
+    { type:'mc', q:"_____ that the suspect is hiding in France.", opts:["It says","It is said","It said","They say"], ans:1, exp:"Passive reporting: It is said that + clause." },
+    { type:'fill', q:"The suspect ____________ (believe/hide) in France.", ans:"is believed to be hiding", exp:"Subject + is believed + to be + -ing." },
+    { type:'mc', q:"He _____ to run ten miles a day.", opts:["says","is said","said","was saying"], ans:1, exp:"Subject + is said + to + infinitive." }
+  ],
+  46: [
+    { type:'mc', q:"I _____ my hair cut yesterday.", opts:["had","have","got","did"], ans:0, exp:"Causative have: had + object + past participle." },
+    { type:'fill', q:"We're ____________ the house painted.", ans:"having", exp:"have something done: having + object + past participle." },
+    { type:'error', q:"I had cut my hair.", ans:"I had my hair cut.", exp:"'Have something done' = arrange for someone else: had + object + past participle." }
+  ],
+  47: [
+    { type:'mc', q:"'I am tired.' → She said she _____ tired.", opts:["is","was","has been","were"], ans:1, exp:"Present → past in reported speech." },
+    { type:'fill', q:"'I will come.' → She said she ____________.", ans:"would come", exp:"Will → would in reported speech." },
+    { type:'mc', q:"'I can swim.' → He said he _____ swim.", opts:["can","could","will","shall"], ans:1, exp:"Can → could in reported speech." },
+    { type:'error', q:"She said me that she was leaving.", ans:"She told me that she was leaving.", exp:"'Tell' needs an object: told me. 'Say' doesn't: she said that." }
+  ],
+  48: [
+    { type:'mc', q:"'Where do you live?' → She asked me where I _____.", opts:["live","lived","do live","did live"], ans:1, exp:"Reported question: normal word order, tense shift." },
+    { type:'fill', q:"'Sit down!' → She ____________ me to sit down.", ans:"told", exp:"Reported command: told + object + to + infinitive." },
+    { type:'error', q:"She asked me where did I live.", ans:"She asked me where I lived.", exp:"Reported questions use normal word order (no inversion)." }
+  ],
+  49: [
+    { type:'mc', q:"'Who _____ you?' (Who is the subject)", opts:["did tell","tells","told","has told"], ans:2, exp:"When 'who' is the subject → no auxiliary needed." },
+    { type:'fill', q:"'What ____________ this word mean?'", ans:"does", exp:"Auxiliary 'does' needed because 'this word' is the subject." },
+    { type:'error', q:"What means this word?", ans:"What does this word mean?", exp:"'Mean' needs auxiliary: What does + subject + verb?" }
+  ],
+  50: [
+    { type:'mc', q:"Do you know _____ the bank is?", opts:["where","where is","where does","where can"], ans:0, exp:"Indirect question: normal word order after 'where'." },
+    { type:'fill', q:"Can you tell me what time it ____________?", ans:"starts", exp:"Indirect question: normal word order (no inversion)." },
+    { type:'error', q:"Do you know where is the station?", ans:"Do you know where the station is?", exp:"Indirect questions use normal word order." }
+  ],
+  51: [
+    { type:'mc', q:"'I love coffee.' '_____ do I!'", opts:["Neither","So","Too","Also"], ans:1, exp:"Agreeing with a positive statement: 'So do I'." },
+    { type:'mc', q:"'I can't swim.' '_____ can I.'", opts:["So","Neither","Either","Also"], ans:1, exp:"Agreeing with a negative statement: 'Neither can I'." },
+    { type:'fill', q:"'Is it raining?' 'I ____________.' (positive short answer)", ans:"think so", exp:"Positive short answer: 'I think so'." }
+  ],
+  52: [
+    { type:'mc', q:"It's cold today, _____ it?", opts:["isn't","is","wasn't","was"], ans:0, exp:"Positive sentence → negative tag. 'It is' → 'isn't it'." },
+    { type:'fill', q:"She hasn't called, ____________?", ans:"has she", exp:"Negative sentence → positive tag. 'hasn't' → 'has she'." },
+    { type:'error', q:"You like coffee, isn't it?", ans:"You like coffee, don't you?", exp:"Tag must use the same auxiliary as the clause: 'like' → 'do you'." }
+  ],
+  53: [
+    { type:'mc', q:"Have you finished _____ the dishes?", opts:["to do","do","doing","done"], ans:2, exp:"'Finish' + -ing form." },
+    { type:'fill', q:"I don't mind ____________ (wait).", ans:"waiting", exp:"'Mind' + -ing form." },
+    { type:'error', q:"She denied to take the money.", ans:"She denied taking the money.", exp:"'Deny' + -ing form (not infinitive)." },
+    { type:'mc', q:"She _____ smoking last year.", opts:["stopped to","stopped","stop","stops"], ans:1, exp:"'Stop smoking' = quit. 'Stop to smoke' = pause to have a cigarette." }
+  ],
+  54: [
+    { type:'mc', q:"I _____ to go home.", opts:["wanting","am wanting","want","have wanted"], ans:2, exp:"'Want' + to-infinitive (and it's a state verb — no continuous)." },
+    { type:'fill', q:"He ____________ (manage) to open the door.", ans:"managed", exp:"'Manage' + to-infinitive." },
+    { type:'error', q:"I want going home.", ans:"I want to go home.", exp:"'Want' + to + base verb (not -ing)." }
+  ],
+  55: [
+    { type:'mc', q:"I remember _____ her before. (memory of past)", opts:["to meet","meet","meeting","met"], ans:2, exp:"Remember + -ing = memory of a past event." },
+    { type:'mc', q:"Remember _____ her tonight! (don't forget)", opts:["calling","call","to call","called"], ans:2, exp:"Remember + to-infinitive = don't forget to do it." },
+    { type:'fill', q:"I tried ____________ (lift) it but it was too heavy. (attempt)", ans:"to lift", exp:"Try + to-infinitive = attempt." },
+    { type:'error', q:"I forgot locking the door. (I didn't do it)", ans:"I forgot to lock the door.", exp:"Forget + to-infinitive = fail to do something." }
+  ],
+  56: [
+    { type:'mc', q:"I _____ swimming. (general feeling)", opts:["like to swim","am liking swimming","like swimming","would like to swim"], ans:2, exp:"Like + -ing for general feelings." },
+    { type:'mc', q:"I _____ to swim today. (specific wish)", opts:["like","am liking","would like","likes"], ans:2, exp:"Would like + to-infinitive for specific desire." },
+    { type:'fill', q:"I ____________ (prefer) cycling to driving.", ans:"prefer", exp:"Prefer + -ing + to + -ing for general preferences." }
+  ],
+  57: [
+    { type:'mc', q:"I _____ walk than take a bus.", opts:["prefer to","would rather","had better","like to"], ans:1, exp:"'Would rather + base verb' = preference." },
+    { type:'fill', q:"She'd rather you ____________ (not tell) anyone.", ans:"didn't tell", exp:"'Would rather + subject + past tense' = want someone else not to do it." },
+    { type:'error', q:"I would rather to stay home.", ans:"I would rather stay home.", exp:"'Would rather' + base verb (no 'to')." }
+  ],
+  58: [
+    { type:'mc', q:"I'm good _____ remembering faces.", opts:["in","at","for","about"], ans:1, exp:"'Good at' + -ing." },
+    { type:'fill', q:"She left without ____________ (say) goodbye.", ans:"saying", exp:"After preposition 'without' → -ing form." },
+    { type:'error', q:"I look forward to hear from you.", ans:"I look forward to hearing from you.", exp:"'Look forward to' → 'to' is a preposition here, so use -ing." }
+  ],
+  59: [
+    { type:'mc', q:"I _____ driving on the left. It's normal for me.", opts:["used to","am used to","use to","was used to"], ans:1, exp:"'Be used to + -ing' = accustomed to." },
+    { type:'fill', q:"I ____________ (smoke) but I quit.", ans:"used to smoke", exp:"Past habit that stopped → 'used to + base verb'." },
+    { type:'error', q:"I am used to wake up early.", ans:"I am used to waking up early.", exp:"'Be used to' + -ing (not to-infinitive)." }
+  ],
+  60: [
+    { type:'mc', q:"I _____ you to help me.", opts:["want","am wanting","wanting","wants"], ans:0, exp:"'Want + object + to-infinitive'." },
+    { type:'fill', q:"She ____________ (tell) me to be quiet.", ans:"told", exp:"'Tell + object + to-infinitive'." },
+    { type:'error', q:"He made me to cry.", ans:"He made me cry.", exp:"'Make + object + base verb' (no 'to')." },
+    { type:'mc', q:"_____ her go. She'll be fine.", opts:["Make","Let","Tell","Allow"], ans:1, exp:"'Let + object + base verb' (no 'to')." }
+  ],
+  61: [
+    { type:'mc', q:"Do you have _____ information?", opts:["an","a","any","some"], ans:2, exp:"'Information' is uncountable → no a/an; use 'any' in questions." },
+    { type:'fill', q:"Can I give you ____________ advice?", ans:"some", exp:"Uncountable noun in a positive offer → 'some'." },
+    { type:'error', q:"She gave me an advice.", ans:"She gave me some advice / a piece of advice.", exp:"'Advice' is uncountable → no 'an'." }
+  ],
+  62: [
+    { type:'mc', q:"The news _____ very surprising.", opts:["are","were","is","have been"], ans:2, exp:"'News' is always singular in English." },
+    { type:'fill', q:"I have a lot of ____________ to do.", ans:"work", exp:"'Work' (tasks) is uncountable." },
+    { type:'error', q:"This is a lovely scenery.", ans:"This is lovely scenery.", exp:"'Scenery' is uncountable → no 'a'." }
+  ],
+  63: [
+    { type:'mc', q:"I saw _____ dog in the park. _____ dog was barking.", opts:["a/A","a/The","the/The","the/A"], ans:1, exp:"First mention → 'a'; second mention (already known) → 'the'." },
+    { type:'fill', q:"She's _____ doctor who treated me.", ans:"the", exp:"Specific doctor (identified by the clause) → 'the'." },
+    { type:'error', q:"The life is short.", ans:"Life is short.", exp:"General abstract meaning → no article." }
+  ],
+  64: [
+    { type:'mc', q:"Can you close _____ door?", opts:["a","an","the","—"], ans:2, exp:"'The' when it's clear which one (the door in this room)." },
+    { type:'fill', q:"He's _____ best player on the team.", ans:"the", exp:"Superlative → always use 'the'." }
+  ],
+  65: [
+    { type:'mc', q:"_____ blind need special assistance.", opts:["A","The","—","An"], ans:1, exp:"'The + adjective' = group of people (the blind = blind people)." },
+    { type:'fill', q:"She swam across _____ English Channel.", ans:"the", exp:"'The' with named bodies of water." },
+    { type:'error', q:"I live in the France.", ans:"I live in France.", exp:"No article with most country names." }
+  ],
+  66: [
+    { type:'mc', q:"She went to _____ hospital. (as a patient)", opts:["the","a","—","an"], ans:2, exp:"'Go to hospital' (as patient) → no article in British English." },
+    { type:'fill', q:"He goes to _____ school by bus. (he's a student)", ans:"", exp:"'Go to school' (as a student) → no article." },
+    { type:'mc', q:"I went to _____ hospital to visit her. (as visitor)", opts:["—","the","a","an"], ans:1, exp:"Visiting as an outsider → 'the hospital' (specific building)." }
+  ],
+  67: [
+    { type:'mc', q:"_____ dogs are loyal animals.", opts:["The","A","—","Some"], ans:2, exp:"General statement about all dogs → no article." },
+    { type:'fill', q:"_____ crime is increasing. (general statement)", ans:"", exp:"General abstract concept → no article." },
+    { type:'mc', q:"_____ people prefer summer. (most, not the most)", opts:["Most of the","Most","The most","All the"], ans:1, exp:"'Most + noun' for general majority → no 'the'." }
+  ],
+  68: [
+    { type:'error', q:"I need an advice.", ans:"I need some advice.", exp:"'Advice' is uncountable → no 'an'." },
+    { type:'mc', q:"She's _____ nurse.", opts:["a","the","an","—"], ans:0, exp:"'A' for professions (one of many nurses)." },
+    { type:'fill', q:"_____ sun rises in the east.", ans:"The", exp:"'The' for unique things." }
+  ],
+  69: [
+    { type:'mc', q:"Is there _____ bread left?", opts:["some","any","a","—"], ans:1, exp:"'Any' in questions and negative sentences." },
+    { type:'fill', q:"Would you like _____ tea? (offer)", ans:"some", exp:"'Some' in offers (expecting yes)." },
+    { type:'error', q:"I don't want some coffee.", ans:"I don't want any coffee.", exp:"Negative sentences → 'any' (not 'some')." }
+  ],
+  70: [
+    { type:'mc', q:"I have _____ money. (zero)", opts:["no","none","not","any"], ans:0, exp:"'No' + noun for zero quantity." },
+    { type:'fill', q:"_____ of the answers were correct.", ans:"None", exp:"'None of' + the/my + noun." },
+    { type:'mc', q:"There weren't _____ problems.", opts:["no","none","any","some"], ans:2, exp:"Negative + 'any' = no problems." }
+  ],
+  71: [
+    { type:'mc', q:"There isn't _____ time.", opts:["many","a few","much","a lot"], ans:2, exp:"'Much' + uncountable noun in negatives." },
+    { type:'fill', q:"I have _____ friends in London. (some, positive)", ans:"a few", exp:"'A few' = some (positive meaning)." },
+    { type:'mc', q:"_____ people know the answer. (hardly any)", opts:["A few","Few","Some","Many"], ans:1, exp:"'Few' (without 'a') = hardly any (negative meaning)." }
+  ],
+  72: [
+    { type:'mc', q:"_____ children need love. (general)", opts:["All of","All of the","All","Every"], ans:2, exp:"'All + noun' (no 'of') for general statements." },
+    { type:'fill', q:"_____ of my friends are married.", ans:"Most", exp:"'Most of + my/the + noun' for specific group." },
+    { type:'error', q:"All of students passed.", ans:"All of the students passed. / All students passed.", exp:"'All of' needs the/my etc. before the noun." }
+  ],
+  73: [
+    { type:'mc', q:"_____ windows were open.", opts:["Both","Neither","Either","All"], ans:0, exp:"'Both' = the two together (positive)." },
+    { type:'fill', q:"_____ answer was correct. (not one, not the other)", ans:"Neither", exp:"'Neither' = not one and not the other (two options)." },
+    { type:'mc', q:"_____ day is fine with me. (one or the other)", opts:["Both","Neither","Either","All"], ans:2, exp:"'Either' = one or the other (a choice between two)." }
+  ],
+  74: [
+    { type:'mc', q:"I waited _____ day.", opts:["all","whole","every","each"], ans:0, exp:"'All day' = the whole day (duration)." },
+    { type:'fill', q:"_____ student passed the exam.", ans:"Every", exp:"'Every + singular noun' = all students, one by one." },
+    { type:'mc', q:"He spent _____ summer travelling.", opts:["all","every","the whole","each"], ans:2, exp:"'The whole + singular noun' = complete, nothing missing." }
+  ],
+  85: [
+    { type:'mc', q:"The lesson was _____. I was _____.", opts:["interesting/interested","interested/interesting","bored/boring","boring/bored"], ans:0, exp:"-ing for the cause; -ed for the person who feels it." },
+    { type:'error', q:"I'm very boring at this party.", ans:"I'm very bored at this party.", exp:"People feel bored (-ed); parties/situations are boring (-ing)." },
+    { type:'fill', q:"The news was _____. She was _____.", ans:"shocking / shocked", exp:"Shocking = causes shock. Shocked = experiences shock." }
+  ],
+  87: [
+    { type:'mc', q:"He's a _____ driver.", opts:["carefully","careful","care","caring"], ans:1, exp:"Adjective before noun: 'careful driver'." },
+    { type:'fill', q:"She speaks English very ____________.", ans:"well", exp:"Adverb modifies verb: 'well' (not 'good')." },
+    { type:'error', q:"She speaks English good.", ans:"She speaks English well.", exp:"Adverb needed to modify verb: 'speaks' → 'well'." }
+  ],
+  88: [
+    { type:'mc', q:"She works _____. She's very dedicated. (adverb)", opts:["hardly","hard","hardily","hard work"], ans:1, exp:"'Hard' = adverb of manner (works with effort)." },
+    { type:'mc', q:"She _____ works. She's very lazy.", opts:["hard","hardly","hard-working","hardily"], ans:1, exp:"'Hardly' = almost not (she barely works)." },
+    { type:'fill', q:"I haven't seen him ____________. (recently)", ans:"lately", exp:"'Lately' = recently." }
+  ],
+  89: [
+    { type:'mc', q:"It was _____ a cold day that we stayed inside.", opts:["so","such","very","too"], ans:1, exp:"'Such a + noun phrase'." },
+    { type:'mc', q:"It was _____ cold that we stayed inside.", opts:["such","so","very","too"], ans:1, exp:"'So + adjective'." },
+    { type:'error', q:"It was such cold.", ans:"It was so cold.", exp:"'So' + adjective (no noun). 'Such a' + noun." }
+  ],
+  90: [
+    { type:'mc', q:"This coffee is _____ hot to drink.", opts:["so","such","too","very"], ans:2, exp:"'Too' = more than desired (negative implication)." },
+    { type:'fill', q:"She wasn't old ____________ to see the film.", ans:"enough", exp:"Adjective + 'enough'." },
+    { type:'error', q:"She is enough old.", ans:"She is old enough.", exp:"'Enough' comes AFTER the adjective." }
+  ],
+  92: [
+    { type:'mc', q:"This car is _____ than that one.", opts:["more cheap","cheaper","most cheap","cheapest"], ans:1, exp:"Short adjective → add -er." },
+    { type:'fill', q:"She's ____________ (intelligent) than her brother.", ans:"more intelligent", exp:"Long adjective → more + adjective." },
+    { type:'mc', q:"I feel _____ today than yesterday.", opts:["more good","gooder","better","more better"], ans:2, exp:"Irregular comparative: good → better." }
+  ],
+  93: [
+    { type:'mc', q:"He's _____ better now.", opts:["very","much","so","more"], ans:1, exp:"'Much/far/a lot' strengthen comparatives." },
+    { type:'fill', q:"The _____ I practise, the _____ I become.", ans:"more / more confident", exp:"'The + comparative, the + comparative' structure." }
+  ],
+  94: [
+    { type:'mc', q:"She's _____ tall _____ her brother. (equal)", opts:["so/as","as/as","more/than","too/to"], ans:1, exp:"Equal comparison: as + adjective + as." },
+    { type:'fill', q:"It costs ____________ as much as last year.", ans:"twice", exp:"'Twice as much as' = two times the amount." }
+  ],
+  95: [
+    { type:'mc', q:"This is _____ longest river in the world.", opts:["a","—","the","an"], ans:2, exp:"Always 'the' before superlatives." },
+    { type:'fill', q:"That was _____ worst meal I've ever had.", ans:"the", exp:"Superlative → always use 'the'." },
+    { type:'mc', q:"She's _____ talented student in the class.", opts:["more","the most","most","very most"], ans:1, exp:"'The most + long adjective' = superlative." }
+  ],
+  96: [
+    { type:'mc', q:"_____ it was raining, we went out.", opts:["Despite","In spite of","Although","Because"], ans:2, exp:"'Although' + clause (not noun/-ing)." },
+    { type:'fill', q:"_____ the rain, we went out.", ans:"Despite / In spite of", exp:"'Despite/In spite of' + noun." },
+    { type:'error', q:"Despite it was cold, we went out.", ans:"Although it was cold, / Despite the cold, we went out.", exp:"'Despite' + noun/-ing (not a clause with subject + verb)." }
+  ],
+  97: [
+    { type:'mc', q:"Take an umbrella _____ it rains.", opts:["if","although","in case","unless"], ans:2, exp:"'In case' = precaution (not the same as 'if')." },
+    { type:'fill', q:"I wrote it down _____ I forgot.", ans:"in case", exp:"'In case' = as a precaution." },
+    { type:'error', q:"Take an umbrella in case it will rain.", ans:"Take an umbrella in case it rains.", exp:"After 'in case' → present simple (not will)." }
+  ],
+  98: [
+    { type:'mc', q:"I'll come _____ it rains. (= if it doesn't rain)", opts:["if","unless","although","in case"], ans:1, exp:"'Unless' = if not." },
+    { type:'fill', q:"You can borrow the car _____ you're careful.", ans:"as long as", exp:"'As long as' = on condition that." }
+  ],
+  101: [
+    { type:'mc', q:"The meeting is _____ Monday.", opts:["at","in","on","by"], ans:2, exp:"'On' + days of the week." },
+    { type:'fill', q:"She arrived _____ March.", ans:"in", exp:"'In' + months." },
+    { type:'error', q:"She arrived in Monday.", ans:"She arrived on Monday.", exp:"'On' with days: on Monday, on Tuesday." },
+    { type:'mc', q:"I'll see you _____ 3 o'clock.", opts:["in","on","at","by"], ans:2, exp:"'At' for precise times." }
+  ],
+  102: [
+    { type:'mc', q:"She's _____ the kitchen.", opts:["at","on","in","by"], ans:2, exp:"'In' for enclosed spaces." },
+    { type:'fill', q:"I'll meet you _____ the airport.", ans:"at", exp:"'At' for specific points/locations." },
+    { type:'mc', q:"The book is _____ the table.", opts:["in","at","on","by"], ans:2, exp:"'On' for surface contact." }
+  ],
+  104: [
+    { type:'mc', q:"Can you finish it _____ Monday?", opts:["until","by","in","on"], ans:1, exp:"'By' = deadline (no later than)." },
+    { type:'fill', q:"I usually go to work _____ train.", ans:"by", exp:"'By' + transport." },
+    { type:'mc', q:"The play was written _____ Shakespeare.", opts:["by","from","with","of"], ans:0, exp:"'By' for the agent in passive sentences." }
+  ],
+  118: [
+    { type:'mc', q:"I fell asleep _____ the film.", opts:["while","for","during","since"], ans:2, exp:"'During' + noun (the film)." },
+    { type:'fill', q:"I waited _____ two hours.", ans:"for", exp:"'For' + period of time." },
+    { type:'error', q:"I met her during three months.", ans:"I met her for three months.", exp:"'For' + period of time; 'during' + named period." }
+  ],
+  119: [
+    { type:'mc', q:"I'll be ready _____ 6.", opts:["until","by","since","for"], ans:1, exp:"'By' = deadline." },
+    { type:'fill', q:"I'll wait _____ 6.", ans:"until", exp:"'Until' = continue to that point." },
+    { type:'mc', q:"_____ the time I arrived, she had left.", opts:["By","Until","In","At"], ans:0, exp:"'By the time' + clause = at the point when." }
+  ],
+  121: [
+    { type:'mc', q:"Have you _____ eaten? (sooner than expected)", opts:["still","yet","already","just"], ans:2, exp:"'Already' = sooner than expected (positive)." },
+    { type:'fill', q:"I haven't finished ____________.", ans:"yet", exp:"'Yet' at the end of negatives (until now)." },
+    { type:'mc', q:"She _____ lives at home. (continuing)", opts:["already","yet","still","even"], ans:2, exp:"'Still' = continuing, not stopped." }
+  ],
+  140: [
+    { type:'mc', q:"She _____ me that she was leaving.", opts:["said","told","spoke","talked"], ans:1, exp:"'Tell' needs an object: told me." },
+    { type:'fill', q:"She _____ she was leaving.", ans:"said", exp:"'Say' doesn't need an object." },
+    { type:'error', q:"He told that he was tired.", ans:"He said he was tired. / He told me he was tired.", exp:"'Tell' always needs a person object." }
+  ]
+};
+
+// ============================================================
+// ALL-TOPIC QUESTION POOL for Exam Mode
+// ============================================================
+const EXAM_POOL = [
+  { unit:1,  q:"Right now, Sarah _____ in the car.",         opts:["drive","drives","is driving","drove"],          ans:2, exp:"Present continuous for NOW." },
+  { unit:2,  q:"Water _____ at 100°C.",                     opts:["is boiling","boils","boil","has boiled"],        ans:1, exp:"General truth → present simple." },
+  { unit:5,  q:"Mozart _____ in 1756.",                     opts:["is born","was born","has been born","born"],     ans:1, exp:"Specific past event → past simple." },
+  { unit:6,  q:"I _____ home when it started to rain.",     opts:["walk","walked","was walking","have walked"],     ans:2, exp:"Background action → past continuous." },
+  { unit:7,  q:"I _____ my key. I can't get in.",           opts:["lose","lost","have lost","had lost"],            ans:2, exp:"Present result → present perfect." },
+  { unit:9,  q:"I _____ English for six months.",           opts:["learn","have learned","have been learning","am learning"], ans:2, exp:"Ongoing activity with duration → present perfect continuous." },
+  { unit:12, q:"I've lived here _____ 2015.",               opts:["for","since","during","from"],                   ans:1, exp:"Since + point in time." },
+  { unit:15, q:"When I arrived, the film _____ already _____.", opts:["has/started","had/started","was/starting","started/already"], ans:1, exp:"Earlier past action → past perfect." },
+  { unit:18, q:"I _____ smoke, but I stopped two years ago.", opts:["use to","am used to","used to","was used to"], ans:2, exp:"Past habit → used to." },
+  { unit:20, q:"Look at those clouds — it _____ rain!",     opts:["will","is going to","is","would"],               ans:1, exp:"Prediction with evidence → going to." },
+  { unit:21, q:"A: We have no milk. B: OK, I _____ get some.", opts:["am going to","will","would","shall"],         ans:1, exp:"Spontaneous decision → will." },
+  { unit:25, q:"When you _____, give me a call.",           opts:["will arrive","arrive","arrived","are arriving"], ans:1, exp:"Future time clause → present simple." },
+  { unit:26, q:"In the future, we _____ travel to Mars.",   opts:["can","could","will be able to","are able to"],   ans:2, exp:"Future ability → will be able to." },
+  { unit:28, q:"You've been travelling all day. You _____ tired.", opts:["can be","must be","should be","would be"], ans:1, exp:"Logical deduction → must." },
+  { unit:29, q:"I _____ go to Paris. I'm not sure yet.",    opts:["will","must","may","should"],                    ans:2, exp:"Possibility → may/might." },
+  { unit:31, q:"You _____ wear a tie. Not necessary.",      opts:["mustn't","don't have to","shouldn't","can't"],   ans:1, exp:"Don't have to = not necessary." },
+  { unit:33, q:"I _____ studied more. (past regret)",       opts:["should have","must have","could","had to"],      ans:0, exp:"Past regret → should have + past participle." },
+  { unit:35, q:"You _____ take an umbrella — looks like rain.", opts:["should","had better","must","have to"],      ans:1, exp:"Had better = strong advice for specific situation." },
+  { unit:38, q:"If it _____, we'll cancel the match.",      opts:["will rain","rains","rained","would rain"],       ans:1, exp:"Type 1 conditional: if + present simple." },
+  { unit:39, q:"I wish I _____ the answer. (I don't know)", opts:["know","knew","have known","will know"],          ans:1, exp:"Wish + past simple for present unreal wishes." },
+  { unit:40, q:"If I had known, I _____ visited you.",      opts:["will have","would have","had","could"],          ans:1, exp:"Type 3 conditional: would have + past participle." },
+  { unit:42, q:"My car _____ last night.",                  opts:["stole","was stolen","has stolen","is stolen"],   ans:1, exp:"Past passive: was + past participle." },
+  { unit:46, q:"I _____ my hair cut yesterday.",            opts:["had","have","got","did"],                        ans:0, exp:"Causative have: had + object + past participle." },
+  { unit:47, q:"'I am tired.' → She said she _____ tired.", opts:["is","was","has been","were"],                    ans:1, exp:"Present → past in reported speech." },
+  { unit:48, q:"'Where do you live?' → She asked where I _____.", opts:["live","lived","do live","did live"],       ans:1, exp:"Reported question: normal word order + tense shift." },
+  { unit:49, q:"What _____ this word mean?",                opts:["means","is","does","do"],                       ans:2, exp:"Question with 'does' for third person." },
+  { unit:50, q:"Do you know _____ the bank is?",            opts:["where is","where","where does","where can"],     ans:1, exp:"Indirect question: normal word order." },
+  { unit:52, q:"It's cold today, _____ it?",                opts:["isn't","is","wasn't","was"],                    ans:0, exp:"Positive sentence → negative tag." },
+  { unit:53, q:"Have you finished _____ the dishes?",       opts:["to do","do","doing","done"],                    ans:2, exp:"Finish + -ing form." },
+  { unit:55, q:"Remember _____ her tonight! (don't forget)", opts:["calling","call","to call","called"],            ans:2, exp:"Remember + to-infinitive = don't forget to do it." },
+  { unit:58, q:"She left without _____ goodbye.",           opts:["to say","say","says","saying"],                  ans:3, exp:"After preposition 'without' → -ing form." },
+  { unit:61, q:"Do you have _____ information?",            opts:["an","a","any","some"],                          ans:2, exp:"Uncountable noun in question → any." },
+  { unit:63, q:"I saw _____ dog. _____ dog was barking.",   opts:["a/A","a/The","the/The","the/A"],                ans:1, exp:"First mention 'a', second mention 'the'." },
+  { unit:67, q:"_____ dogs are loyal animals.",             opts:["The","A","—","Some"],                           ans:2, exp:"General statement → no article." },
+  { unit:71, q:"There isn't _____ time.",                   opts:["many","a few","much","a lot"],                  ans:2, exp:"Much + uncountable." },
+  { unit:85, q:"The lesson was _____. I was _____.",        opts:["interesting/interested","interested/interesting","bored/boring","boring/bored"], ans:0, exp:"-ing for cause; -ed for the person who feels it." },
+  { unit:87, q:"She speaks English very _____.",            opts:["good","well","goodly","nice"],                   ans:1, exp:"Adverb needed to modify verb: well." },
+  { unit:89, q:"It was _____ a cold day that we stayed in.", opts:["so","such","very","too"],                       ans:1, exp:"Such a + noun phrase." },
+  { unit:90, q:"This coffee is _____ hot to drink.",        opts:["so","such","too","very"],                       ans:2, exp:"Too = more than desired." },
+  { unit:96, q:"_____ it was raining, we went out.",        opts:["Despite","In spite of","Although","Because"],   ans:2, exp:"Although + clause." },
+  { unit:97, q:"Take an umbrella _____ it rains.",          opts:["if","although","in case","unless"],             ans:2, exp:"In case = precaution." },
+  { unit:101, q:"The meeting is _____ Monday.",             opts:["at","in","on","by"],                            ans:2, exp:"On + days." },
+  { unit:104, q:"Can you finish it _____ Monday?",          opts:["until","by","in","on"],                         ans:1, exp:"By = deadline." },
+  { unit:118, q:"I fell asleep _____ the film.",            opts:["while","for","during","since"],                 ans:2, exp:"During + noun." },
+  { unit:119, q:"I'll be ready _____ 6. (deadline)",        opts:["until","by","since","for"],                     ans:1, exp:"By = no later than." },
+  { unit:121, q:"I haven't finished _____.",                opts:["already","still","yet","even"],                 ans:2, exp:"Yet at end of negatives." },
+  { unit:140, q:"She _____ me that she was leaving.",       opts:["said","told","spoke","talked"],                  ans:1, exp:"Tell + object." },
+  { unit:92,  q:"This car is _____ than that one.",         opts:["more cheap","cheaper","most cheap","cheapest"], ans:1, exp:"Short adjective → -er comparative." },
+  { unit:95,  q:"This is _____ longest river in the world.", opts:["a","—","the","an"],                            ans:2, exp:"Always 'the' before superlatives." },
+];
+</script>
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  currentView: 'home',
+  currentUnit: null,
+  theme: 'light',
+  progress: {},      // { unitId: { viewed, completed, score, attempts } }
+  bookmarks: [],
+  recentlyViewed: [],
+  examAnswers: {},
+  examQuestions: [],
+  examType: null,
+  examStartTime: null,
+  examTimerInterval: null,
+  activeFilter: 'all',
+  exerciseStates: {},
+};
+
+// ============================================================
+// PERSISTENCE
+// ============================================================
+function saveState() {
+  try {
+    localStorage.setItem('eiuProgress',  JSON.stringify(state.progress));
+    localStorage.setItem('eiuBookmarks', JSON.stringify(state.bookmarks));
+    localStorage.setItem('eiuRecent',    JSON.stringify(state.recentlyViewed));
+    localStorage.setItem('eiuTheme',     state.theme);
+    const today = new Date().toDateString();
+    const last = localStorage.getItem('eiuLastStudy');
+    let streak = parseInt(localStorage.getItem('eiuStreak') || '0');
+    const yesterday = new Date(Date.now()-86400000).toDateString();
+    if (last === yesterday) streak++;
+    else if (last !== today) streak = 1;
+    localStorage.setItem('eiuLastStudy', today);
+    localStorage.setItem('eiuStreak', streak);
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    state.progress        = JSON.parse(localStorage.getItem('eiuProgress')  || '{}');
+    state.bookmarks       = JSON.parse(localStorage.getItem('eiuBookmarks') || '[]');
+    state.recentlyViewed  = JSON.parse(localStorage.getItem('eiuRecent')    || '[]');
+    state.theme           = localStorage.getItem('eiuTheme') || 'light';
+  } catch(e) {
+    state.progress = {}; state.bookmarks = []; state.recentlyViewed = [];
+  }
+}
+
+// ============================================================
+// THEME
+// ============================================================
+function toggleTheme() {
+  state.theme = state.theme === 'light' ? 'dark' : 'light';
+  applyTheme();
+  saveState();
+}
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', state.theme);
+  document.getElementById('theme-btn').textContent = state.theme === 'dark' ? '☀️' : '🌙';
+}
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+let sidebarOpen = false;
+function toggleSidebar() {
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('open', sidebarOpen);
+}
+function closeSidebarOnMobile() {
+  if (window.innerWidth <= 900 && sidebarOpen) toggleSidebar();
+}
+
+function buildSidebar() {
+  const inner = document.getElementById('sidebar-inner');
+  let html = '';
+  CATEGORIES.forEach(cat => {
+    const catUnits = UNITS.filter(u => u.cat === cat.id);
+    html += `
+    <div class="sb-section">
+      <div class="sb-section-hdr" onclick="toggleSbSection(this)">
+        ${cat.label}
+        <span class="toggle-btn">▼</span>
+      </div>
+      <div class="sb-unit-list">`;
+    catUnits.forEach(u => {
+      const done = state.progress[u.id]?.completed;
+      html += `
+        <div class="sb-unit ${done ? 'completed' : ''}" id="sb-unit-${u.id}"
+          onclick="openUnit(${u.id})">
+          <span class="sb-num">${u.id}</span>
+          <span style="flex:1">${u.title}</span>
+          <span class="sb-check">✓</span>
+        </div>`;
+    });
+    html += `</div></div>`;
+  });
+  inner.innerHTML = html;
+  updateSidebarProgress();
+}
+
+function toggleSbSection(hdr) {
+  hdr.classList.toggle('collapsed');
+  const list = hdr.nextElementSibling;
+  if (hdr.classList.contains('collapsed')) {
+    list.style.maxHeight = '0px';
+  } else {
+    list.style.maxHeight = list.scrollHeight + 'px';
+  }
+}
+
+function updateSidebarProgress() {
+  const total    = UNITS.length;
+  const completed = Object.values(state.progress).filter(p => p.completed).length;
+  const pct = Math.round((completed / total) * 100);
+  const bar = document.getElementById('sb-prog-bar');
+  const lbl = document.getElementById('sb-prog-pct');
+  if (bar) bar.style.width = pct + '%';
+  if (lbl) lbl.textContent = pct + '%';
+  // Update checkmarks
+  UNITS.forEach(u => {
+    const el = document.getElementById(`sb-unit-${u.id}`);
+    if (!el) return;
+    el.classList.toggle('completed', !!state.progress[u.id]?.completed);
+  });
+}
+
+// ============================================================
+// VIEW MANAGEMENT
+// ============================================================
+const VIEWS = ['home','unit','exam','bookmarks','recent','stats'];
+
+function showView(name) {
+  VIEWS.forEach(v => {
+    const el = document.getElementById(`view-${v}`);
+    if (el) el.style.display = 'none';
+  });
+  const target = document.getElementById(`view-${name}`);
+  if (target) target.style.display = '';
+  state.currentView = name;
+  // Activate sidebar unit
+  document.querySelectorAll('.sb-unit').forEach(el => el.classList.remove('active'));
+  if (name === 'unit' && state.currentUnit) {
+    const sb = document.getElementById(`sb-unit-${state.currentUnit}`);
+    if (sb) { sb.classList.add('active'); sb.scrollIntoView({block:'nearest'}); }
+  }
+  if (name === 'home')      renderHome();
+  if (name === 'bookmarks') renderBookmarks();
+  if (name === 'recent')    renderRecent();
+  if (name === 'stats')     renderStats();
+  closeSidebarOnMobile();
+  window.scrollTo(0, 0);
+  updateReadingProgress();
+}
+
+// ============================================================
+// HOME VIEW
+// ============================================================
+function renderHome() {
+  // Stats
+  const total     = UNITS.length;
+  const studied   = Object.keys(state.progress).length;
+  const completed = Object.values(state.progress).filter(p => p.completed).length;
+  const scores    = Object.values(state.progress).filter(p => p.score != null).map(p => p.score);
+  const avgAcc    = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : null;
+  const streak    = parseInt(localStorage.getItem('eiuStreak') || '0');
+
+  document.getElementById('stat-studied').textContent   = studied;
+  document.getElementById('stat-completed').textContent = completed;
+  document.getElementById('stat-accuracy').textContent  = avgAcc != null ? avgAcc + '%' : '—';
+  document.getElementById('stat-streak').textContent    = streak;
+  document.getElementById('stat-studied-bar').style.width = Math.round((studied/total)*100) + '%';
+
+  // Filter tabs
+  const tabs = document.getElementById('home-filter-tabs');
+  tabs.innerHTML = `<button class="filter-tab ${state.activeFilter==='all'?'active':''}" onclick="filterUnits('all')">All</button>`;
+  CATEGORIES.forEach(c => {
+    tabs.innerHTML += `<button class="filter-tab ${state.activeFilter===c.id?'active':''}" onclick="filterUnits('${c.id}')">${c.label}</button>`;
+  });
+
+  renderUnitGrid();
+  updateBookmarkCount();
+}
+
+function filterUnits(catId) {
+  state.activeFilter = catId;
+  renderHome();
+}
+
+function renderUnitGrid() {
+  const grid  = document.getElementById('home-unit-grid');
+  const label = document.getElementById('home-grid-label');
+  const filtered = state.activeFilter === 'all'
+    ? UNITS
+    : UNITS.filter(u => u.cat === state.activeFilter);
+  label.textContent = state.activeFilter === 'all'
+    ? `All ${UNITS.length} Units`
+    : `${filtered.length} units — ${CATEGORIES.find(c=>c.id===state.activeFilter)?.label}`;
+  grid.innerHTML = filtered.map(u => unitCard(u)).join('');
+}
+
+function unitCard(u) {
+  const done = state.progress[u.id]?.completed;
+  const score = state.progress[u.id]?.score;
+  const color = CAT_COLOR[u.cat] || 'tense';
+  return `
+  <div class="unit-card ${done?'completed':''}" onclick="openUnit(${u.id})">
+    <div class="uc-num">Unit ${u.id}</div>
+    <div class="uc-title">${u.title}</div>
+    <div class="uc-cat">${CATEGORIES.find(c=>c.id===u.cat)?.label||''}</div>
+    <div class="uc-tags">
+      <span class="tag tag-${color}">${CATEGORIES.find(c=>c.id===u.cat)?.label||''}</span>
+      ${score!=null ? `<span class="tag tag-${score>=80?'clause':score>=50?'adv':'preposition'}">${score}%</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function continueStudying() {
+  const notDone = UNITS.find(u => !state.progress[u.id]?.viewed);
+  if (notDone) openUnit(notDone.id);
+  else openUnit(1);
+}
+
+// ============================================================
+// UNIT VIEW
+// ============================================================
+function openUnit(unitId) {
+  const unit = UNITS.find(u => u.id === unitId);
+  if (!unit) return;
+  state.currentUnit = unitId;
+  if (!state.progress[unitId]) state.progress[unitId] = {};
+  state.progress[unitId].viewed = true;
+  // Recently viewed
+  state.recentlyViewed = [unitId, ...state.recentlyViewed.filter(id=>id!==unitId)].slice(0,20);
+  saveState();
+  updateSidebarProgress();
+  renderUnit(unit);
+  showView('unit');
+}
+
+function renderUnit(unit) {
+  const lessonEl   = document.getElementById('lesson-panel');
+  const exerciseEl = document.getElementById('exercise-panel');
+  const isBookmarked = state.bookmarks.includes(unit.id);
+  const catLabel = CATEGORIES.find(c=>c.id===unit.cat)?.label||'';
+
+  // Lesson panel
+  lessonEl.innerHTML = `
+    <div class="unit-hdr">
+      <div class="uh-top">
+        <div>
+          <span class="uh-num">Unit ${unit.id}</span>
+        </div>
+        <div class="uh-actions">
+          <button class="btn btn-sm btn-ghost" id="bookmark-btn" onclick="toggleBookmark(${unit.id})" title="Bookmark (B)">
+            ${isBookmarked ? '🔖' : '🤍'} ${isBookmarked ? 'Saved' : 'Save'}
+          </button>
+          <button class="btn btn-sm btn-ghost" onclick="printUnit()" title="Print (P)">🖨️</button>
+          <button class="btn btn-sm btn-ghost" onclick="markComplete(${unit.id})" title="Mark complete">
+            ${state.progress[unit.id]?.completed ? '✅ Done' : '⬜ Mark done'}
+          </button>
+        </div>
+      </div>
+      <h2>${unit.title}</h2>
+      <div class="uh-meta">
+        <span class="tag tag-${CAT_COLOR[unit.cat]||'tense'}">${catLabel}</span>
+        ${unit.subtitle ? `<span style="font-size:.8rem;color:var(--c-text3)">${unit.subtitle}</span>` : ''}
+      </div>
+    </div>
+    ${renderLessonContent(unit)}
+    ${renderUnitNav(unit.id)}
+  `;
+
+  // Exercise panel
+  const exs = EXERCISES[unit.id];
+  if (exs && exs.length > 0) {
+    exerciseEl.innerHTML = renderExercises(unit.id, exs);
+  } else {
+    exerciseEl.innerHTML = `
+      <div class="ex-panel-title">Practice Exercises</div>
+      <div style="color:var(--c-text3);font-size:.875rem;padding:20px 0;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px">📝</div>
+        <p>Review the lesson and apply the rules.</p>
+        <button class="btn btn-outline btn-sm" style="margin-top:12px" onclick="openQuickQuiz(${unit.id})">
+          Take a Quick Quiz
+        </button>
+      </div>`;
+  }
+
+  // Scroll to top of panels
+  lessonEl.scrollTop = 0;
+  exerciseEl.scrollTop = 0;
+}
+
+function renderLessonContent(unit) {
+  let html = '';
+
+  // Formula
+  if (unit.formula) {
+    html += `
+    <div class="lesson-section">
+      <div class="ls-title t-rule">Formula / Structure</div>
+      <div class="formula-box">${unit.formula.replace(/\n/g,'<br>')}</div>
+    </div>`;
+  }
+
+  // Rules
+  if (unit.rules && unit.rules.length) {
+    html += `
+    <div class="lesson-section">
+      <div class="ls-title t-rule">Key Rules</div>
+      <div class="rule-list">
+        ${unit.rules.map(r=>`<div class="rule-item">${r}</div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Examples
+  if (unit.examples && unit.examples.length) {
+    html += `
+    <div class="lesson-section">
+      <div class="ls-title t-example">Examples</div>
+      <div class="example-list">
+        ${unit.examples.map(e=>`
+          <div class="ex-item">
+            <span class="ex-marker">▸</span>
+            <span class="ex-text">${e.text}${e.note?`<span class="ex-note">${e.note}</span>`:''}</span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Notes
+  if (unit.notes && unit.notes.length) {
+    html += `<div class="lesson-section">
+      <div class="ls-title t-note">Important Notes</div>
+      ${unit.notes.map(n=>`
+        <div class="note-box">
+          <span class="nb-icon">💡</span>
+          <div>${n}</div>
+        </div>`).join('')}
+    </div>`;
+  }
+
+  // Common mistakes
+  if (unit.mistakes && unit.mistakes.length) {
+    html += `<div class="lesson-section">
+      <div class="ls-title t-mistake">Common Mistakes</div>
+      <div class="mistake-box">
+        ${unit.mistakes.map(m=>`
+          <div class="mistake-row">
+            <span class="mr-x">✗</span>
+            <span class="mr-text mr-wrong">${m.wrong}</span>
+          </div>
+          <div class="mistake-row">
+            <span class="mr-check">✓</span>
+            <span class="mr-text">${m.right}</span>
+          </div>`).join('<hr style="border:none;border-top:1px solid var(--c-border);margin:6px 0">')}
+      </div>
+    </div>`;
+  }
+
+  // Comparison table
+  if (unit.compare && unit.compare.length) {
+    const headers = unit.compare[0];
+    const rows    = unit.compare.slice(1);
+    const cols    = Object.values(headers);
+    html += `<div class="lesson-section">
+      <div class="ls-title t-compare">Comparison</div>
+      <table class="compare-table">
+        <thead><tr>${cols.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+        <tbody>
+          ${rows.map(r=>`<tr>${Object.values(r).map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+
+  // Quick summary
+  html += `<div class="lesson-section">
+    <div class="ls-title t-summary">Quick Revision</div>
+    <div class="collapsible">
+      <div class="coll-header" onclick="toggleColl(this)">
+        <span>📋 Summary for ${unit.title}</span>
+        <span class="coll-arrow">▶</span>
+      </div>
+      <div class="coll-body">
+        ${unit.rules ? unit.rules.map(r=>`<div style="padding:4px 0;font-size:.875rem;border-bottom:1px solid var(--c-border);">• ${r}</div>`).join('') : '<p>Review the rules above.</p>'}
+      </div>
+    </div>
+  </div>`;
+
+  return html;
+}
+
+function renderUnitNav(unitId) {
+  const idx  = UNITS.findIndex(u => u.id === unitId);
+  const prev = UNITS[idx - 1];
+  const next = UNITS[idx + 1];
+  return `
+  <div class="unit-nav-strip">
+    <button class="unav-btn" ${!prev?'disabled':''} onclick="${prev?`openUnit(${prev.id})`:''}">
+      ← ${prev ? 'Unit ' + prev.id : 'First unit'}
+    </button>
+    <button class="btn btn-ghost btn-sm" onclick="showView('home')">⊞ All Units</button>
+    <button class="unav-btn" ${!next?'disabled':''} onclick="${next?`openUnit(${next.id})`:''}">
+      ${next ? 'Unit ' + next.id : 'Last unit'} →
+    </button>
+  </div>`;
+}
+
+// ============================================================
+// EXERCISES
+// ============================================================
+function renderExercises(unitId, exs) {
+  const prog = state.progress[unitId] || {};
+  let html = `
+    <div class="ex-panel-title">
+      <span>Practice (${exs.length} questions)</span>
+      <span class="ep-score" id="ex-score-${unitId}">Score: —</span>
+    </div>`;
+
+  exs.forEach((ex, i) => {
+    html += `<div class="quiz-card" id="qc-${unitId}-${i}">
+      <div class="qc-num">Q${i+1} · ${ex.type === 'mc' ? 'Multiple Choice' : ex.type === 'fill' ? 'Fill in the Blank' : 'Error Correction'}</div>
+      <div class="qc-question">${formatQuestion(ex)}</div>`;
+
+    if (ex.type === 'mc') {
+      html += `<div class="qc-options">`;
+      ex.opts.forEach((opt, j) => {
+        html += `<button class="qc-option" id="opt-${unitId}-${i}-${j}" onclick="answerMC(${unitId},${i},${j})">${opt}</button>`;
+      });
+      html += `</div>`;
+    } else {
+      html += `<input type="text" class="fill-input" id="fill-${unitId}-${i}"
+        placeholder="Type your answer..." onkeydown="if(event.key==='Enter')checkFill(${unitId},${i})">
+        <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="checkFill(${unitId},${i})">Check</button>`;
+    }
+
+    html += `<div class="qc-feedback" id="fb-${unitId}-${i}"></div>
+    </div>`;
+  });
+
+  html += `<div class="ex-actions">
+    <button class="btn btn-primary btn-sm" onclick="checkAllExercises(${unitId})">Submit All</button>
+    <button class="btn btn-ghost btn-sm" onclick="resetExercises(${unitId})">Reset</button>
+  </div>
+  <div id="unit-score-display-${unitId}"></div>`;
+
+  return html;
+}
+
+function formatQuestion(ex) {
+  if (ex.type === 'fill') {
+    return ex.q.replace('____________', '<span class="blank">?</span>');
+  }
+  return ex.q;
+}
+
+function answerMC(unitId, qIdx, optIdx) {
+  const ex = EXERCISES[unitId][qIdx];
+  if (!ex) return;
+  if (!state.exerciseStates[unitId]) state.exerciseStates[unitId] = {};
+  if (state.exerciseStates[unitId][qIdx]?.answered) return;
+
+  state.exerciseStates[unitId][qIdx] = { answered: true, correct: optIdx === ex.ans, selected: optIdx };
+
+  const opts = document.querySelectorAll(`[id^="opt-${unitId}-${qIdx}-"]`);
+  opts.forEach((btn, j) => {
+    btn.disabled = true;
+    if (j === ex.ans)      btn.classList.add('correct');
+    if (j === optIdx && optIdx !== ex.ans) btn.classList.add('wrong');
+  });
+
+  showFeedback(unitId, qIdx, optIdx === ex.ans, ex.exp, ex.opts[ex.ans]);
+  updateExScore(unitId);
+}
+
+function checkFill(unitId, qIdx) {
+  const ex = EXERCISES[unitId][qIdx];
+  const inp = document.getElementById(`fill-${unitId}-${qIdx}`);
+  if (!ex || !inp) return;
+  if (!state.exerciseStates[unitId]) state.exerciseStates[unitId] = {};
+  if (state.exerciseStates[unitId][qIdx]?.answered) return;
+
+  const userAns = inp.value.trim().toLowerCase();
+  const correct = ex.ans.trim().toLowerCase();
+  const isCorrect = userAns === correct ||
+    correct.split('/').map(s=>s.trim().toLowerCase()).includes(userAns);
+
+  state.exerciseStates[unitId][qIdx] = { answered: true, correct: isCorrect };
+  inp.disabled = true;
+  inp.classList.add(isCorrect ? 'correct' : 'wrong');
+  showFeedback(unitId, qIdx, isCorrect, ex.exp, ex.ans);
+  updateExScore(unitId);
+}
+
+function checkAllExercises(unitId) {
+  const exs = EXERCISES[unitId];
+  if (!exs) return;
+  exs.forEach((ex, i) => {
+    if (state.exerciseStates[unitId]?.[i]?.answered) return;
+    if (ex.type === 'mc') {
+      // Show correct answer without selection
+      if (!state.exerciseStates[unitId]) state.exerciseStates[unitId] = {};
+      state.exerciseStates[unitId][i] = { answered: true, correct: false, selected: -1 };
+      const opts = document.querySelectorAll(`[id^="opt-${unitId}-${i}-"]`);
+      opts.forEach((btn, j) => {
+        btn.disabled = true;
+        if (j === ex.ans) btn.classList.add('correct');
+      });
+      showFeedback(unitId, i, false, ex.exp, ex.opts[ex.ans]);
+    } else {
+      const inp = document.getElementById(`fill-${unitId}-${i}`);
+      if (inp && inp.value.trim()) checkFill(unitId, i);
+    }
+  });
+  updateExScore(unitId);
+  saveScoreToProgress(unitId);
+}
+
+function showFeedback(unitId, qIdx, isCorrect, explanation, correctAns) {
+  const fb = document.getElementById(`fb-${unitId}-${qIdx}`);
+  if (!fb) return;
+  fb.className = `qc-feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  fb.innerHTML = isCorrect
+    ? `✓ Correct! <span class="fb-answer">${explanation || ''}</span>`
+    : `✗ Incorrect. Answer: <span class="fb-answer">${correctAns}</span>${explanation ? ' — ' + explanation : ''}`;
+}
+
+function updateExScore(unitId) {
+  const exs = EXERCISES[unitId];
+  if (!exs) return;
+  const st = state.exerciseStates[unitId] || {};
+  const answered = Object.values(st).filter(v => v.answered).length;
+  const correct  = Object.values(st).filter(v => v.correct).length;
+  const scoreEl  = document.getElementById(`ex-score-${unitId}`);
+  if (scoreEl) scoreEl.textContent = `Score: ${correct}/${answered}`;
+}
+
+function saveScoreToProgress(unitId) {
+  const exs = EXERCISES[unitId];
+  if (!exs) return;
+  const st = state.exerciseStates[unitId] || {};
+  const answered = Object.values(st).filter(v => v.answered).length;
+  const correct  = Object.values(st).filter(v => v.correct).length;
+  if (answered === 0) return;
+  const score = Math.round((correct / exs.length) * 100);
+  if (!state.progress[unitId]) state.progress[unitId] = {};
+  state.progress[unitId].score     = score;
+  state.progress[unitId].completed = true;
+  state.progress[unitId].attempts  = (state.progress[unitId].attempts || 0) + 1;
+  saveState();
+  updateSidebarProgress();
+
+  // Show score display
+  const disp = document.getElementById(`unit-score-display-${unitId}`);
+  if (disp) {
+    const cls = score >= 80 ? 'good' : score >= 50 ? 'ok' : 'poor';
+    const msg = score >= 80 ? '🎉 Excellent!' : score >= 50 ? '👍 Good effort!' : '📚 Keep studying!';
+    disp.innerHTML = `
+    <div class="score-display">
+      <div class="sd-number ${cls}">${score}%</div>
+      <div class="sd-label">${msg} ${correct}/${exs.length} correct</div>
+      <div class="sd-bar">
+        <div class="prog-bar-bg">
+          <div class="prog-bar-fill" style="width:${score}%;background:${cls==='good'?'var(--c-success)':cls==='ok'?'var(--c-warn)':'var(--c-error)'}"></div>
+        </div>
+      </div>
+    </div>`;
+  }
+  showToast(`Unit ${unitId} completed! Score: ${score}%`, score >= 80 ? 'success' : 'info');
+}
+
+function resetExercises(unitId) {
+  state.exerciseStates[unitId] = {};
+  const unit = UNITS.find(u => u.id === unitId);
+  if (!unit) return;
+  const exs = EXERCISES[unitId];
+  if (exs) {
+    document.getElementById('exercise-panel').innerHTML = renderExercises(unitId, exs);
+  }
+}
+
+// ============================================================
+// BOOKMARKS
+// ============================================================
+function toggleBookmark(unitId) {
+  if (state.bookmarks.includes(unitId)) {
+    state.bookmarks = state.bookmarks.filter(id => id !== unitId);
+    showToast('Bookmark removed', 'info');
+  } else {
+    state.bookmarks.push(unitId);
+    showToast('Bookmarked!', 'success');
+  }
+  saveState();
+  updateBookmarkCount();
+  // Refresh button if visible
+  const btn = document.getElementById('bookmark-btn');
+  if (btn) {
+    const saved = state.bookmarks.includes(unitId);
+    btn.innerHTML = saved ? '🔖 Saved' : '🤍 Save';
+  }
+}
+
+function updateBookmarkCount() {
+  const cnt = document.getElementById('bookmark-count');
+  if (!cnt) return;
+  if (state.bookmarks.length > 0) {
+    cnt.style.display = 'flex';
+    cnt.textContent   = state.bookmarks.length;
+  } else {
+    cnt.style.display = 'none';
+  }
+}
+
+function renderBookmarks() {
+  const grid  = document.getElementById('bookmarks-grid');
+  const empty = document.getElementById('bookmarks-empty');
+  if (state.bookmarks.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+  } else {
+    empty.classList.add('hidden');
+    const units = state.bookmarks.map(id => UNITS.find(u => u.id === id)).filter(Boolean);
+    grid.innerHTML = units.map(u => unitCard(u)).join('');
+  }
+}
+
+// ============================================================
+// RECENTLY VIEWED
+// ============================================================
+function renderRecent() {
+  const grid  = document.getElementById('recent-grid');
+  const empty = document.getElementById('recent-empty');
+  if (state.recentlyViewed.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+  } else {
+    empty.classList.add('hidden');
+    const units = state.recentlyViewed.map(id => UNITS.find(u => u.id === id)).filter(Boolean);
+    grid.innerHTML = units.map(u => unitCard(u)).join('');
+  }
+}
+
+// ============================================================
+// STATS VIEW
+// ============================================================
+function renderStats() {
+  const total     = UNITS.length;
+  const studied   = Object.keys(state.progress).filter(id => state.progress[id].viewed).length;
+  const completed = Object.values(state.progress).filter(p => p.completed).length;
+  const scores    = Object.values(state.progress).filter(p => p.score != null).map(p => p.score);
+  const avg       = scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length) : 0;
+  const streak    = parseInt(localStorage.getItem('eiuStreak') || '0');
+  const attempts  = Object.values(state.progress).reduce((sum,p)=>(sum+(p.attempts||0)),0);
+
+  document.getElementById('stats-big-grid').innerHTML = `
+    <div class="stats-big-card"><div class="sbc-val">${studied}</div><div class="sbc-label">Units Studied</div><div class="sbc-sub">of ${total} total</div></div>
+    <div class="stats-big-card"><div class="sbc-val">${completed}</div><div class="sbc-label">Completed</div><div class="sbc-sub">${Math.round((completed/total)*100)}% of course</div></div>
+    <div class="stats-big-card"><div class="sbc-val">${avg ? avg+'%' : '—'}</div><div class="sbc-label">Avg. Score</div><div class="sbc-sub">${attempts} total attempts</div></div>
+    <div class="stats-big-card"><div class="sbc-val">${streak}</div><div class="sbc-label">Day Streak 🔥</div><div class="sbc-sub">Keep it up!</div></div>
+    <div class="stats-big-card"><div class="sbc-val">${state.bookmarks.length}</div><div class="sbc-label">Bookmarks 🔖</div></div>
+    <div class="stats-big-card"><div class="sbc-val">${state.recentlyViewed.length}</div><div class="sbc-label">Topics Visited</div></div>`;
+
+  // Category performance
+  const tbody = document.getElementById('perf-tbody');
+  tbody.innerHTML = CATEGORIES.map(cat => {
+    const catUnits = UNITS.filter(u => u.cat === cat.id);
+    const done  = catUnits.filter(u => state.progress[u.id]?.completed).length;
+    const catScores = catUnits.filter(u => state.progress[u.id]?.score != null).map(u => state.progress[u.id].score);
+    const catAvg = catScores.length ? Math.round(catScores.reduce((a,b)=>a+b,0)/catScores.length) : null;
+    const pct = Math.round((done/catUnits.length)*100);
+    const fillColor = catAvg >= 80 ? 'var(--c-success)' : catAvg >= 50 ? 'var(--c-warn)' : 'var(--c-error)';
+    return `<tr>
+      <td><span class="tag tag-${cat.color}">${cat.label}</span></td>
+      <td>${done}/${catUnits.length}</td>
+      <td>${catAvg != null ? catAvg + '%' : '—'}
+        ${catAvg != null ? `<span class="perf-mini-bar"><span class="perf-mini-fill" style="width:${catAvg}%;background:${fillColor}"></span></span>` : ''}
+      </td>
+      <td><div class="prog-bar-bg" style="width:100px;display:inline-block"><div class="prog-bar-fill" style="width:${pct}%"></div></div> ${pct}%</td>
+    </tr>`;
+  }).join('');
+
+  // Unit results
+  const unitTbody = document.getElementById('unit-perf-tbody');
+  const unitsDone = UNITS.filter(u => state.progress[u.id]?.score != null);
+  unitTbody.innerHTML = unitsDone.map(u => {
+    const p = state.progress[u.id];
+    const cls = p.score >= 80 ? 'var(--c-success)' : p.score >= 50 ? 'var(--c-warn)' : 'var(--c-error)';
+    return `<tr>
+      <td>${u.id}</td>
+      <td><a href="#" onclick="openUnit(${u.id});return false;" style="color:var(--c-accent)">${u.title}</a></td>
+      <td style="color:${cls};font-weight:700">${p.score}%</td>
+      <td>${p.attempts || 1}</td>
+    </tr>`;
+  }).join('');
+}
+
+function exportProgress() {
+  const data = {
+    exportDate: new Date().toISOString(),
+    progress: state.progress,
+    bookmarks: state.bookmarks,
+    recentlyViewed: state.recentlyViewed
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'grammar-progress.json';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Progress exported!', 'success');
+}
+
+function resetProgress() {
+  if (!confirm('Are you sure? This will erase all your progress, scores and bookmarks.')) return;
+  state.progress = {}; state.bookmarks = []; state.recentlyViewed = [];
+  state.exerciseStates = {};
+  localStorage.clear();
+  saveState();
+  updateSidebarProgress();
+  updateBookmarkCount();
+  renderHome();
+  showToast('Progress reset.', 'info');
+}
+
+function markComplete(unitId) {
+  if (!state.progress[unitId]) state.progress[unitId] = {};
+  state.progress[unitId].completed = !state.progress[unitId].completed;
+  saveState();
+  updateSidebarProgress();
+  renderUnit(UNITS.find(u=>u.id===unitId));
+  showToast(state.progress[unitId].completed ? 'Marked as complete!' : 'Marked as incomplete.', 'success');
+}
+
+// ============================================================
+// EXAM MODE
+// ============================================================
+function startExam(type) {
+  state.examType   = type;
+  state.examAnswers = {};
+  clearInterval(state.examTimerInterval);
+
+  let pool = [...EXAM_POOL];
+  let count = 10;
+
+  if (type === 'standard') count = 25;
+  else if (type === 'full')  count = 50;
+  else if (type === 'weak') {
+    const weakUnits = UNITS
+      .filter(u => state.progress[u.id]?.score != null && state.progress[u.id].score < 70)
+      .map(u => u.id);
+    if (weakUnits.length > 0) {
+      pool = pool.filter(q => weakUnits.includes(q.unit));
+    }
+    count = Math.min(20, pool.length);
+  } else if (type.startsWith('cat-')) {
+    const catId = type.replace('cat-','');
+    const catUnits = UNITS.filter(u => u.cat === catId).map(u => u.id);
+    pool = pool.filter(q => catUnits.includes(q.unit));
+    count = Math.min(15, pool.length);
+  }
+
+  // Shuffle and pick
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  state.examQuestions = pool.slice(0, count);
+
+  document.getElementById('exam-setup').classList.add('hidden');
+  document.getElementById('exam-results').classList.add('hidden');
+  document.getElementById('exam-active').classList.remove('hidden');
+
+  renderExamQuestions();
+  startExamTimer(count * 60); // 1 min per question
+  state.examStartTime = Date.now();
+}
+
+function renderExamQuestions() {
+  const qs = state.examQuestions;
+  // Dots
+  document.getElementById('exam-dots').innerHTML = qs.map((_,i)=>
+    `<div class="ep-dot" id="exam-dot-${i}"></div>`).join('');
+
+  // Questions
+  document.getElementById('exam-questions').innerHTML = qs.map((q, i) => `
+    <div class="quiz-card">
+      <div class="qc-num">Q${i+1} / ${qs.length} — Unit ${q.unit}</div>
+      <div class="qc-question">${q.q}</div>
+      <div class="qc-options">
+        ${q.opts.map((opt, j) => `
+          <button class="qc-option" id="exam-opt-${i}-${j}" onclick="selectExamAnswer(${i},${j})">
+            ${String.fromCharCode(65+j)}. ${opt}
+          </button>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function selectExamAnswer(qIdx, optIdx) {
+  // Toggle previous selection off
+  const q = state.examQuestions[qIdx];
+  if (!q) return;
+  q.opts.forEach((_, j) => {
+    document.getElementById(`exam-opt-${qIdx}-${j}`)?.classList.remove('selected');
+  });
+  document.getElementById(`exam-opt-${qIdx}-${optIdx}`)?.classList.add('selected');
+  state.examAnswers[qIdx] = optIdx;
+
+  // Update dot
+  const dot = document.getElementById(`exam-dot-${qIdx}`);
+  if (dot) dot.classList.add('answered');
+}
+
+function startExamTimer(seconds) {
+  let remaining = seconds;
+  const timerEl = document.getElementById('exam-timer');
+  timerEl.classList.remove('hidden', 'warning');
+  const update = () => {
+    const m = String(Math.floor(remaining/60)).padStart(2,'0');
+    const s = String(remaining % 60).padStart(2,'0');
+    timerEl.textContent = `${m}:${s}`;
+    if (remaining <= 60) timerEl.classList.add('warning');
+    if (remaining <= 0)  { clearInterval(state.examTimerInterval); submitExam(); }
+    remaining--;
+  };
+  update();
+  state.examTimerInterval = setInterval(update, 1000);
+}
+
+function submitExam() {
+  clearInterval(state.examTimerInterval);
+  document.getElementById('exam-timer').classList.add('hidden');
+
+  const qs       = state.examQuestions;
+  let correct    = 0;
+  const results  = [];
+  const timeTaken = Math.round((Date.now() - state.examStartTime) / 1000);
+
+  qs.forEach((q, i) => {
+    const userAns = state.examAnswers[i];
+    const isCorrect = userAns === q.ans;
+    if (isCorrect) correct++;
+    results.push({ q, userAns, isCorrect });
+  });
+
+  const score = Math.round((correct / qs.length) * 100);
+  const cls   = score >= 80 ? 'good' : score >= 50 ? 'ok' : 'poor';
+  const mins  = Math.floor(timeTaken / 60);
+  const secs  = timeTaken % 60;
+
+  document.getElementById('exam-active').classList.add('hidden');
+  const res = document.getElementById('exam-results');
+  res.classList.remove('hidden');
+
+  // Update dots
+  results.forEach((r, i) => {
+    const dot = document.getElementById(`exam-dot-${i}`);
+    if (dot) {
+      dot.classList.remove('answered');
+      dot.classList.add(r.isCorrect ? 'correct' : 'wrong');
+    }
+  });
+
+  res.innerHTML = `
+    <div class="score-display" style="margin-bottom:24px">
+      <div class="sd-number ${cls}">${score}%</div>
+      <div class="sd-label">${correct}/${qs.length} correct · ${mins}m ${secs}s</div>
+      <div class="sd-bar"><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${score}%"></div></div></div>
+      <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="startExam('${state.examType}')">Retry</button>
+        <button class="btn btn-outline btn-sm" onclick="endExam()">Back to Exam Menu</button>
+      </div>
+    </div>
+    <div class="section-heading">Detailed Results</div>
+    ${results.map((r, i) => `
+      <div class="quiz-card" style="border-color:${r.isCorrect?'var(--c-success)':'var(--c-error)'}">
+        <div class="qc-num">Q${i+1} — Unit ${r.q.unit} · ${r.isCorrect?'✓ Correct':'✗ Wrong'}</div>
+        <div class="qc-question">${r.q.q}</div>
+        <div style="font-size:.85rem;padding:6px 0">
+          ${r.userAns != null ? `Your answer: <strong style="color:${r.isCorrect?'var(--c-success)':'var(--c-error)'}">${r.q.opts[r.userAns]}</strong>` : '<strong style="color:var(--c-error)">Not answered</strong>'}
+          ${!r.isCorrect ? ` · Correct: <strong style="color:var(--c-success)">${r.q.opts[r.q.ans]}</strong>` : ''}
+        </div>
+        <div class="qc-feedback show ${r.isCorrect?'correct':'wrong'}">${r.q.exp}</div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="openUnit(${r.q.unit})">
+          📖 Study Unit ${r.q.unit}
+        </button>
+      </div>`).join('')}`;
+
+  showToast(`Exam done! Score: ${score}%`, score >= 80 ? 'success' : 'info');
+}
+
+function endExam() {
+  clearInterval(state.examTimerInterval);
+  document.getElementById('exam-active').classList.add('hidden');
+  document.getElementById('exam-results').classList.add('hidden');
+  document.getElementById('exam-setup').classList.remove('hidden');
+  document.getElementById('exam-timer').classList.add('hidden');
+  buildExamCatGrid();
+}
+
+function buildExamCatGrid() {
+  const grid = document.getElementById('exam-cat-grid');
+  if (!grid) return;
+  grid.innerHTML = CATEGORIES.map(cat => `
+    <div class="unit-card" onclick="startExam('cat-${cat.id}')">
+      <div class="uc-num tag tag-${cat.color}">${cat.label}</div>
+      <div class="uc-title">${cat.label} Test</div>
+      <div class="uc-cat">${UNITS.filter(u=>u.cat===cat.id).length} units covered</div>
+    </div>`).join('');
+}
+
+// ============================================================
+// SEARCH
+// ============================================================
+function initSearch() {
+  const input   = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (q.length < 2) { results.classList.remove('open'); return; }
+    const hits = UNITS.filter(u =>
+      u.title.toLowerCase().includes(q) ||
+      (u.subtitle||'').toLowerCase().includes(q) ||
+      (u.rules||[]).some(r => r.toLowerCase().includes(q)) ||
+      CATEGORIES.find(c=>c.id===u.cat)?.label.toLowerCase().includes(q)
+    ).slice(0, 12);
+
+    if (hits.length === 0) {
+      results.innerHTML = `<div class="search-item"><div class="si-title" style="color:var(--c-text3)">No results found</div></div>`;
+    } else {
+      results.innerHTML = hits.map(u => `
+        <div class="search-item" onclick="openUnit(${u.id});document.getElementById('search-input').value='';document.getElementById('search-results').classList.remove('open')">
+          <span class="si-num">Unit ${u.id}</span>
+          <div>
+            <div class="si-title">${highlight(u.title, q)}</div>
+            <div class="si-cat">${CATEGORIES.find(c=>c.id===u.cat)?.label||''}</div>
+          </div>
+        </div>`).join('');
+    }
+    results.classList.add('open');
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#search-wrap')) results.classList.remove('open');
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { results.classList.remove('open'); input.blur(); }
+  });
+}
+
+function highlight(text, q) {
+  if (!q) return text;
+  const rx = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(rx, '<mark style="background:var(--c-accent-light);color:var(--c-accent);padding:0 2px;border-radius:2px">$1</mark>');
+}
+
+// ============================================================
+// COLLAPSIBLE
+// ============================================================
+function toggleColl(hdr) {
+  const body = hdr.nextElementSibling;
+  hdr.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ============================================================
+// READING PROGRESS BAR
+// ============================================================
+function updateReadingProgress() {
+  const panel = state.currentView === 'unit'
+    ? document.querySelector('.lesson-panel')
+    : document.getElementById(`view-${state.currentView}`);
+  if (!panel) return;
+  const bar = document.getElementById('reading-progress-bar');
+  if (!bar) return;
+  const scroll = panel.scrollTop;
+  const total  = panel.scrollHeight - panel.clientHeight;
+  bar.style.width = total > 0 ? Math.min(100, (scroll / total) * 100) + '%' : '0%';
+}
+
+// ============================================================
+// TOAST NOTIFICATIONS
+// ============================================================
+function showToast(msg, type = 'info') {
+  const area = document.getElementById('toast-area');
+  const icons = { success:'✅', error:'❌', info:'ℹ️' };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span class="toast-icon">${icons[type]||'ℹ️'}</span><span class="toast-msg">${msg}</span>`;
+  area.appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function showModal(bodyHtml) {
+  document.getElementById('modal-body').innerHTML = bodyHtml;
+  document.getElementById('modal-backdrop').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-backdrop').classList.remove('open');
+}
+function showShortcuts() {
+  document.getElementById('shortcuts-modal').classList.add('open');
+}
+
+// ============================================================
+// PRINT
+// ============================================================
+function printUnit() {
+  window.print();
+}
+
+// ============================================================
+// QUICK QUIZ (for units without exercises)
+// ============================================================
+function openQuickQuiz(unitId) {
+  const poolForUnit = EXAM_POOL.filter(q => q.unit === unitId);
+  if (poolForUnit.length === 0) {
+    showToast('No quiz available for this unit yet.', 'info');
+    return;
+  }
+  const qs = poolForUnit.slice(0, 5);
+  let html = `<h3>Quick Quiz — Unit ${unitId}</h3>`;
+  qs.forEach((q, i) => {
+    html += `<div style="margin:16px 0">
+      <div class="qc-num">Q${i+1}</div>
+      <div class="qc-question">${q.q}</div>
+      <div class="qc-options">
+        ${q.opts.map((opt, j) => `<button class="qc-option" onclick="this.parentElement.querySelectorAll('.qc-option').forEach(b=>{b.disabled=true;b.classList.remove('selected')});this.classList.add(${j===q.ans}?'correct':'wrong');this.parentElement.querySelectorAll('.qc-option')[${q.ans}].classList.add('correct')">${opt}</button>`).join('')}
+      </div>
+    </div>`;
+  });
+  showModal(html);
+}
+
+// ============================================================
+// KEYBOARD SHORTCUTS
+// ============================================================
+function initKeyboard() {
+  document.addEventListener('keydown', e => {
+    const tag = document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    switch(e.key) {
+      case '/': e.preventDefault(); document.getElementById('search-input').focus(); break;
+      case 'Escape': closeModal(); document.getElementById('shortcuts-modal').classList.remove('open'); if (state.currentView !== 'home') showView('home'); break;
+      case 'ArrowRight': if (state.currentView==='unit') { const idx=UNITS.findIndex(u=>u.id===state.currentUnit); if (UNITS[idx+1]) openUnit(UNITS[idx+1].id); } break;
+      case 'ArrowLeft':  if (state.currentView==='unit') { const idx=UNITS.findIndex(u=>u.id===state.currentUnit); if (UNITS[idx-1]) openUnit(UNITS[idx-1].id); } break;
+      case 'd': case 'D': toggleTheme(); break;
+      case 'b': case 'B': if (state.currentView==='unit' && state.currentUnit) toggleBookmark(state.currentUnit); else showView('bookmarks'); break;
+      case 'e': case 'E': showView('exam'); break;
+      case 'h': case 'H': showView('home'); break;
+      case 's': case 'S': showView('stats'); break;
+      case 'r': case 'R': showView('recent'); break;
+      case 'p': case 'P': if (state.currentView==='unit') printUnit(); break;
+      case '?': showShortcuts(); break;
+    }
+  });
+}
+
+// ============================================================
+// SCROLL LISTENER
+// ============================================================
+function initScrollListener() {
+  // Lesson panel scroll
+  document.addEventListener('scroll', updateReadingProgress, true);
+}
+
+// ============================================================
+// SIDEBAR UNIT LIST HEIGHT INIT
+// ============================================================
+function initSidebarHeights() {
+  document.querySelectorAll('.sb-unit-list').forEach(list => {
+    list.style.maxHeight = list.scrollHeight + 'px';
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  applyTheme();
+  buildSidebar();
+  initSearch();
+  initKeyboard();
+  initScrollListener();
+  buildExamCatGrid();
+  renderHome();
+  showView('home');
+
+  // Init sidebar list heights after DOM built
+  setTimeout(initSidebarHeights, 100);
+
+  // Mobile: close sidebar when clicking outside
+  document.getElementById('main').addEventListener('click', () => {
+    if (window.innerWidth <= 900 && sidebarOpen) toggleSidebar();
+  });
+});
+</script>
+</body>
+</html>
