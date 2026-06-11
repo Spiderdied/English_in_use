@@ -1028,7 +1028,7 @@ img { max-width: 100%; }
 
     <!-- SIDEBAR -->
     <nav id="sidebar">
-      <div id="sidebar-inner" id="sidebar-inner">
+      <div id="sidebar-inner">
         <!-- Injected by JS -->
       </div>
       <div id="sb-progress-wrap">
@@ -4907,16 +4907,36 @@ function buildSidebar() {
     html += `</div></div>`;
   });
   inner.innerHTML = html;
+  
+  initSidebarHeights();
   updateSidebarProgress();
 }
 
+function initSidebarHeights() {
+  document.querySelectorAll('.sb-unit-list').forEach(list => {
+    if (!list.previousElementSibling.classList.contains('collapsed')) {
+      list.style.maxHeight = 'none';
+    } else {
+      list.style.maxHeight = '0px';
+    }
+  });
+}
+
 function toggleSbSection(hdr) {
-  hdr.classList.toggle('collapsed');
   const list = hdr.nextElementSibling;
-  if (hdr.classList.contains('collapsed')) {
-    list.style.maxHeight = '0px';
+  const isCollapsed = hdr.classList.contains('collapsed');
+
+  if (isCollapsed) {
+    hdr.classList.remove('collapsed');
+    list.style.maxHeight = list.scrollHeight + 'px';
+    setTimeout(() => {
+      if (!hdr.classList.contains('collapsed')) list.style.maxHeight = 'none';
+    }, 300); 
   } else {
     list.style.maxHeight = list.scrollHeight + 'px';
+    void list.offsetWidth; 
+    hdr.classList.add('collapsed');
+    list.style.maxHeight = '0px';
   }
 }
 
@@ -5176,12 +5196,13 @@ function renderLessonContent(unit) {
     const headers = unit.compare[0];
     const rows    = unit.compare.slice(1);
     const cols    = Object.values(headers);
+    const keys    = Object.keys(headers);
     html += `<div class="lesson-section">
       <div class="ls-title t-compare">Comparison</div>
       <table class="compare-table">
         <thead><tr>${cols.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
         <tbody>
-          ${rows.map(r=>`<tr>${Object.values(r).map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+          ${rows.map(r=>`<tr>${keys.map(k=>`<td>${r[k] || ''}</td>`).join('')}</tr>`).join('')}
         </tbody>
       </table>
     </div>`;
@@ -5312,7 +5333,6 @@ function checkAllExercises(unitId) {
   exs.forEach((ex, i) => {
     if (state.exerciseStates[unitId]?.[i]?.answered) return;
     if (ex.type === 'mc') {
-      // Show correct answer without selection
       if (!state.exerciseStates[unitId]) state.exerciseStates[unitId] = {};
       state.exerciseStates[unitId][i] = { answered: true, correct: false, selected: -1 };
       const opts = document.querySelectorAll(`[id^="opt-${unitId}-${i}-"]`);
@@ -5323,7 +5343,8 @@ function checkAllExercises(unitId) {
       showFeedback(unitId, i, false, ex.exp, ex.opts[ex.ans]);
     } else {
       const inp = document.getElementById(`fill-${unitId}-${i}`);
-      if (inp && inp.value.trim()) checkFill(unitId, i);
+      // هنا شلنا الشرط اللي كان بيتجاهل الإجابة الفاضية
+      if (inp) checkFill(unitId, i); 
     }
   });
   updateExScore(unitId);
@@ -5780,14 +5801,21 @@ function toggleColl(hdr) {
 // READING PROGRESS BAR
 // ============================================================
 function updateReadingProgress() {
-  const panel = state.currentView === 'unit'
-    ? document.querySelector('.lesson-panel')
-    : document.getElementById(`view-${state.currentView}`);
-  if (!panel) return;
   const bar = document.getElementById('reading-progress-bar');
   if (!bar) return;
-  const scroll = panel.scrollTop;
-  const total  = panel.scrollHeight - panel.clientHeight;
+
+  let scroll = 0, total = 0;
+  
+  if (state.currentView === 'unit') {
+    const panel = document.querySelector('.lesson-panel');
+    if (!panel) return;
+    scroll = panel.scrollTop;
+    total = panel.scrollHeight - panel.clientHeight;
+  } else {
+    scroll = window.scrollY || document.documentElement.scrollTop;
+    total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  }
+  
   bar.style.width = total > 0 ? Math.min(100, (scroll / total) * 100) + '%' : '0%';
 }
 
@@ -5828,6 +5856,16 @@ function printUnit() {
 // ============================================================
 // QUICK QUIZ (for units without exercises)
 // ============================================================
+function answerQuickQuiz(btn, isCorrect, correctIdx) {
+  const options = btn.parentElement.querySelectorAll('.qc-option');
+  options.forEach((b, idx) => {
+    b.disabled = true;
+    b.classList.remove('selected');
+    if (idx === correctIdx) b.classList.add('correct');
+  });
+  if (!isCorrect) btn.classList.add('wrong');
+}
+   
 function openQuickQuiz(unitId) {
   const poolForUnit = EXAM_POOL.filter(q => q.unit === unitId);
   if (poolForUnit.length === 0) {
@@ -5841,7 +5879,7 @@ function openQuickQuiz(unitId) {
       <div class="qc-num">Q${i+1}</div>
       <div class="qc-question">${q.q}</div>
       <div class="qc-options">
-        ${q.opts.map((opt, j) => `<button class="qc-option" onclick="this.parentElement.querySelectorAll('.qc-option').forEach(b=>{b.disabled=true;b.classList.remove('selected')});this.classList.add(${j===q.ans}?'correct':'wrong');this.parentElement.querySelectorAll('.qc-option')[${q.ans}].classList.add('correct')">${opt}</button>`).join('')}
+        ${q.opts.map((opt, j) => `<button class="qc-option" onclick="answerQuickQuiz(this, ${j === q.ans}, ${q.ans})">${opt}</button>`).join('')}
       </div>
     </div>`;
   });
@@ -5900,11 +5938,8 @@ window.addEventListener('DOMContentLoaded', () => {
   initKeyboard();
   initScrollListener();
   buildExamCatGrid();
-  renderHome();
   showView('home');
 
-  // Init sidebar list heights after DOM built
-  setTimeout(initSidebarHeights, 100);
 
   // Mobile: close sidebar when clicking outside
   document.getElementById('main').addEventListener('click', () => {
