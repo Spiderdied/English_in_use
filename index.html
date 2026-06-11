@@ -4964,21 +4964,27 @@ const VIEWS = ['home','unit','exam','bookmarks','recent','stats'];
 function showView(name) {
   VIEWS.forEach(v => {
     const el = document.getElementById(`view-${v}`);
-    if (el) el.style.display = 'none';
+    if (el) el.style.display = 'none'; // بنخفي كل الصفحات التانية
   });
+  
   const target = document.getElementById(`view-${name}`);
-  if (target) target.style.display = '';
+  // التعديلة هنا: خلينا القيمة 'block' عشان تظهر غصب عن الـ CSS
+  if (target) target.style.display = 'block'; 
+  
   state.currentView = name;
+  
   // Activate sidebar unit
   document.querySelectorAll('.sb-unit').forEach(el => el.classList.remove('active'));
   if (name === 'unit' && state.currentUnit) {
     const sb = document.getElementById(`sb-unit-${state.currentUnit}`);
     if (sb) { sb.classList.add('active'); sb.scrollIntoView({block:'nearest'}); }
   }
+  
   if (name === 'home')      renderHome();
   if (name === 'bookmarks') renderBookmarks();
   if (name === 'recent')    renderRecent();
   if (name === 'stats')     renderStats();
+  
   closeSidebarOnMobile();
   window.scrollTo(0, 0);
   updateReadingProgress();
